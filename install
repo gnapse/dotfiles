@@ -6,7 +6,7 @@ git submodule init
 git submodule update
 
 # Create symlinks to dotfiles
-dotfiles=(zshrc)
+dotfiles=(zshrc gitconfig gitignore)
 for f in $dotfiles; do
   ln -s ~/.dotfiles/$f ~/.$f
 done

@@ -1,0 +1,15 @@
+Thumbs.db
+.DS_Store
+.svn
+.rvmrc
+.ruby-version
+.ruby-gemset
+.powenv
+CVS
+nbproject/
+*.kpf
+*.[oa]
+*~
+.*.swp
+.tm_properties
+

@@ -6,7 +6,7 @@ git submodule init
 git submodule update
 
 # Create symlinks to dotfiles
-dotfiles='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc'
+dotfiles='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc tmux.conf'
 for f in $dotfiles; do
   ln -s ~/.dotfiles/$f ~/.$f
 done

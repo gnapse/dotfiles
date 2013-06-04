@@ -11,6 +11,9 @@ for f in $dotfiles; do
   ln -s ~/.dotfiles/$f ~/.$f
 done
 
+# Create some temporary directories
+mkdir -p ~/.vim/tmp/undo
+
 # Set zsh as the default shell
 chsh -s /bin/zsh
 

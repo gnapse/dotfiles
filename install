@@ -16,7 +16,9 @@ ln -s ~/.dotfiles/zsh/gnapse.zsh-theme ~/.dotfiles/oh-my-zsh/custom/
 ln -s ~/.dotfiles/zsh/plugins ~/.dotfiles/oh-my-zsh/custom/
 
 # Set zsh as the default shell
-chsh -s /bin/zsh
+if [[ $SHELL != "/bin/zsh" ]]; then
+  chsh -s /bin/zsh
+fi
 
 # We're done
 echo "Start a new terminal and enjoy!"

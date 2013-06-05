@@ -87,3 +87,6 @@
 [submodule "vim/bundle/trailing-whitespace"]
 	path = vim/bundle/trailing-whitespace
 	url = git://github.com/bronson/vim-trailing-whitespace
+[submodule "vim/bundle/sensible"]
+	path = vim/bundle/sensible
+	url = git://github.com/tpope/vim-sensible.git

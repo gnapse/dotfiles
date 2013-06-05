@@ -4,7 +4,16 @@ set number
 " Color scheme
 set background=dark
 colorscheme peaksea
-"
+
+" Set font according to system
+if has("mac") || has("macunix")
+    set gfn=Inconsolata:h16
+elseif has("win16") || has("win32")
+    set gfn=Bitstream\ Vera\ Sans\ Mono:h11
+elseif has("linux")
+    set gfn=Monospace\ 11
+endif
+
 " Open MacVim in fullscreen mode
 if has("gui_macvim")
     set fuoptions=maxvert,maxhorz

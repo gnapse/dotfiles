@@ -49,9 +49,6 @@ try
 catch
 endtry
 
-" For closing command-t when active
-let g:CommandTCancelMap=['<C-x>', '<C-c>', '<Esc>']
-
 " Delete trailing white space on save for certain types of files
 autocmd BufWrite *.rb :call DeleteTrailingWS()
 autocmd BufWrite *.js :call DeleteTrailingWS()

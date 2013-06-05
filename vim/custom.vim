@@ -3,7 +3,7 @@ set number
 
 " Color scheme
 set background=dark
-colorscheme peaksea
+colorscheme vividchalk
 
 " Set font according to system
 if has("mac") || has("macunix")
@@ -47,9 +47,11 @@ catch
 endtry
 
 " Delete trailing white space on save for certain types of files
-autocmd BufWrite *.rb :call DeleteTrailingWS()
-autocmd BufWrite *.js :call DeleteTrailingWS()
-autocmd BufWrite *.css :call DeleteTrailingWS()
+autocmd BufWrite *.py :FixWhitespace
+autocmd BufWrite *.rb :FixWhitespace
+autocmd BufWrite *.js :FixWhitespace
+autocmd BufWrite *.css :FixWhitespace
+autocmd BufWrite *.coffee :FixWhitespace
 
 " git commands shortcuts
 map <leader>gst :Gstatus<cr>

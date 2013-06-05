@@ -12,7 +12,6 @@ for f in $dotfiles; do
 done
 
 # Set up some extra files and directories
-mkdir -p ~/.vim/tmp/undo
 ln -s ~/.dotfiles/zsh/gnapse.zsh-theme ~/.dotfiles/oh-my-zsh/custom/
 ln -s ~/.dotfiles/zsh/plugins ~/.dotfiles/oh-my-zsh/custom/
 

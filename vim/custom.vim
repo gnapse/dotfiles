@@ -32,15 +32,12 @@ if has("gui_running")
     set guitablabel=%M\ %t
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Turn persistent undo on
-"    means that you can undo even when you close a buffer/VIM
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-try
-    set undodir=~/.vim/tmp/undo
-    set undofile
-catch
-endtry
+" Enable persistent undo
+set undofile
+set undodir=~/.vim/tmp/undo
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
+endif
 
 " Specify the behavior when switching between buffers
 try

@@ -78,3 +78,6 @@
 [submodule "vim/bundle/eunuch"]
 	path = vim/bundle/eunuch
 	url = git://github.com/tpope/vim-eunuch.git
+[submodule "vim/bundle/commentary"]
+	path = vim/bundle/commentary
+	url = git://github.com/tpope/vim-commentary.git

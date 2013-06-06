@@ -120,6 +120,24 @@ autocmd BufWrite *.coffee :FixWhitespace
 
 
 """"""""""""""""""""""""""""""
+" => Moving text around
+""""""""""""""""""""""""""""""
+" Indent in and out with Cmd+] and Cmd+[ respectively
+if has("mac") || has("macunix")
+  nmap <D-[> <<
+  nmap <D-]> >>
+  vmap <D-[> <gv
+  vmap <D-]> >gv
+endif
+
+" Bubble single and multiple lines up and down
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+
+
+""""""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
 " Visual mode pressing * or # searches for the current selection

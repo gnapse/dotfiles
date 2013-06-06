@@ -92,19 +92,24 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
-
-" Be smart when using tabs ;)
-set smarttab
-
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-
 " Linebreak on 500 characters
 set lbr
 set tw=500
+
+" Set default indentation
+set ts=4 sts=4 sw=4 expandtab
+
+" Set indentation preferences per file type
+autocmd FileType javascript setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType eruby setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType coffee setlocal ts=2 sts=2 sw=2 expandtab
+
+" Help vim recognize correct filetype for some file extensions
+autocmd BufNewFile,BufRead *.rss,*.atom setfiletype xml
 
 " Delete trailing white space on save for certain types of files
 autocmd BufWrite *.py :FixWhitespace

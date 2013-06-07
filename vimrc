@@ -213,6 +213,8 @@ nmap <leader>i :set list!<CR>
 " Add new-line when pressing ENTER in normal mode
 map <CR> o<Esc>
 
+" Diff the current buffer against the unmodifed version on disk
+map <leader>df :DiffSaved<CR>
 
 """"""""""""""""""""""""""""""
 " => CTRL-P
@@ -351,3 +353,13 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
+
+" Diff the current buffer against the unmodifed version on disk
+function! s:DiffWithSaved()
+    let filetype=&ft
+    diffthis
+    vnew | r # | normal! 1Gdd
+    diffthis
+    exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()

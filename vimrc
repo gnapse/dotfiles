@@ -68,9 +68,6 @@ set nrformats=                  " make <C-a> and <C-x> play well with
 " Toggle show/hide invisible chars
 nnoremap <leader>i :set list!<cr>
 
-" Toggle line numbers
-nnoremap <leader>N :setlocal number!<cr>
-
 " Thanks to Steve Losh for this liberating tip
 " See http://stevelosh.com/blog/2010/09/coming-home-to-vim
 nnoremap / /\v
@@ -168,6 +165,21 @@ function! s:QuickfixToggle()
         let g:quickfix_return_to_window = winnr()
         copen
         let g:quickfix_is_open = 1
+    endif
+endfunction
+" }}}
+
+" Toggle relative/absolute line numbers {{{
+nnoremap <leader>n :call LineNumbersToggle()<cr>
+let g:absolute_line_numbers = 1
+
+function! LineNumbersToggle()
+    if g:absolute_line_numbers
+        let g:absolute_line_numbers = 0
+        set relativenumber
+    else
+        let g:absolute_line_numbers = 1
+        set number
     endif
 endfunction
 " }}}

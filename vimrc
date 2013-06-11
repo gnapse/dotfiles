@@ -268,7 +268,7 @@ nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 
 " YankRing stuff
-let g:yankring_history_dir = '$HOME/.vim/.tmp'
+let g:yankring_history_dir = '$HOME/.vim/tmp'
 nnoremap <leader>my :YRShow<CR>
 
 " Edit the vimrc file

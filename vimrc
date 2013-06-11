@@ -66,7 +66,7 @@ set nrformats=                  " make <C-a> and <C-x> play well with
                                 "    them octal or hex)
 
 " Toggle show/hide invisible chars
-nnoremap <leader>i :set list!<cr>
+nnoremap <leader>mi :set list!<cr>
 
 " Thanks to Steve Losh for this liberating tip
 " See http://stevelosh.com/blog/2010/09/coming-home-to-vim
@@ -170,7 +170,7 @@ endfunction
 " }}}
 
 " Toggle relative/absolute line numbers {{{
-nnoremap <leader>n :call LineNumbersToggle()<cr>
+nnoremap <leader>mn :call LineNumbersToggle()<cr>
 let g:absolute_line_numbers = 1
 
 function! LineNumbersToggle()
@@ -185,7 +185,7 @@ endfunction
 " }}}
 
 " Toggle the foldcolumn {{{
-nnoremap <leader>f :call FoldColumnToggle()<cr>
+nnoremap <leader>mf :call FoldColumnToggle()<cr>
 
 let g:last_fold_column_width = 4  " Pick a sane default for the foldcolumn
 
@@ -269,11 +269,11 @@ nnoremap <leader>P "+P
 
 " YankRing stuff
 let g:yankring_history_dir = '$HOME/.vim/.tmp'
-nnoremap <leader>r :YRShow<CR>
+nnoremap <leader>my :YRShow<CR>
 
 " Edit the vimrc file
-nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
-nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
+nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
+nnoremap <silent> <leader>vs :so $MYVIMRC<CR>
 
 " Clears the search register
 nnoremap <silent> <leader>/ :nohlsearch<CR>
@@ -283,7 +283,7 @@ nnoremap <leader><space> :noh<cr>
 
 " Pull word under cursor into LHS of a substitute (for quick search and
 " replace)
-nnoremap <leader>z :%s#\<<C-r>=expand("<cword>")<CR>\>#
+nnoremap <leader>mz :%s#\<<C-r>=expand("<cword>")<CR>\>#
 
 " Keep search matches in the middle of the window and pulse the line when moving
 " to them.
@@ -313,12 +313,12 @@ vnoremap <Tab> %
 nnoremap <Space> za
 vnoremap <Space> za
 
-" Strip all trailing whitespace from a file, using ,ws
-nnoremap <leader>ws :%s/\s\+$//<CR>:let @/=''<CR>
+" Strip all trailing whitespace from a file
+nnoremap <leader>mw :%s/\s\+$//<CR>:let @/=''<CR>
 
 " Ack for the word under cursor
 "nnoremap <leader>a :Ack<Space>
-nnoremap <leader>a :Ack<Space><c-r><c-W>
+nnoremap <leader>ma :Ack<Space><c-r><c-W>
 
 " Creating folds for tags in HTML
 "nnoremap <leader>ft Vatzf
@@ -333,7 +333,7 @@ nnoremap <F5> :GundoToggle<CR>
 " NERDTree settings {{{
 " Put focus to the NERD Tree with F3 (tricked by quickly closing it and
 " immediately showing it again, since there is no :NERDTreeFocus command)
-nnoremap <leader>c :NERDTreeToggle<CR>
+nnoremap <leader>mf :NERDTreeToggle<CR>
 
 " Store the bookmarks file
 let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
@@ -362,8 +362,7 @@ let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
 " }}}
 
 " TagList settings {{{
-nnoremap <leader>l :TlistClose<CR>:TlistToggle<CR>
-nnoremap <leader>L :TlistClose<CR>
+nnoremap <leader>mg :TlistToggle<CR>
 
 " quit Vim when the TagList window is the last open window
 let Tlist_Exit_OnlyWindow=1         " quit when TagList is the last open window
@@ -714,13 +713,13 @@ map <leader>ba :1,1000 bd!<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
+map <leader>t1 :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>t<leader> :tabnext
 
 " git commands shortcuts
-map <leader>gst :Gstatus<cr>
+map <leader>ms :Gstatus<cr>
 
 " Add new-line when pressing ENTER in normal mode
 map <CR> o<Esc>
@@ -763,9 +762,9 @@ map <c-b> :CtrlPBuffer<cr>
 let g:ctrlp_max_height = 20
 let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
-map <leader>t :CtrlP<CR>
-map <leader>o :CtrlPBuffer<CR>
-map <leader>r :CtrlPMRU<CR>
-map <leader>m :CtrlPMixed<CR>
+map <leader>mt :CtrlP<CR>
+map <leader>mb :CtrlPBuffer<CR>
+map <leader>mr :CtrlPMRU<CR>
+map <leader>mm :CtrlPMixed<CR>
 
 " }}}

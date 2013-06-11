@@ -328,6 +328,7 @@ nnoremap <leader>v V`]
 
 " Gundo.vim
 nnoremap <F5> :GundoToggle<CR>
+nnoremap <leader>mu :GundoToggle<CR>
 " }}}
 
 " NERDTree settings {{{

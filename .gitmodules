@@ -110,3 +110,9 @@
 [submodule "vim/bundle/flake8"]
 	path = vim/bundle/flake8
 	url = git://github.com/nvie/vim-flake8.git
+[submodule "vim/bundle/molokai"]
+	path = vim/bundle/molokai
+	url = git://github.com/tomasr/molokai.git
+[submodule "vim/bundle/mustang"]
+	path = vim/bundle/mustang
+	url = git://github.com/croaker/mustang-vim.git

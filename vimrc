@@ -608,7 +608,7 @@ if has("gui_running")
 endif
 
 set bg=dark
-colorscheme vividchalk
+colorscheme molokai
 
 " Pulse {{{
 

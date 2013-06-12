@@ -8,12 +8,12 @@ git submodule update
 # Create symlinks to dotfiles
 dotfiles='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc tmux.conf vim vimrc tm_properties'
 for f in $dotfiles; do
-  ln -s ~/.dotfiles/$f ~/.$f
+  ln -s -f ~/.dotfiles/$f ~/.$f
 done
 
 # Set up some extra files and directories
-ln -s ~/.dotfiles/zsh/gnapse.zsh-theme ~/.dotfiles/oh-my-zsh/custom/
-ln -s ~/.dotfiles/zsh/plugins ~/.dotfiles/oh-my-zsh/custom/
+ln -s -f ~/.dotfiles/zsh/gnapse.zsh-theme ~/.dotfiles/oh-my-zsh/custom/
+ln -s -f ~/.dotfiles/zsh/plugins ~/.dotfiles/oh-my-zsh/custom/
 
 # Set zsh as the default shell
 if [[ $SHELL != "/bin/zsh" ]]; then

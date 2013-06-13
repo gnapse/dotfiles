@@ -120,3 +120,6 @@
 	path = vim/bundle/textobj-user
 	url = git://github.com/kana/vim-textobj-user.git
 	ignore = dirty
+[submodule "vim/bundle/textobj-rubyblock"]
+	path = vim/bundle/textobj-rubyblock
+	url = git://github.com/nelstrom/vim-textobj-rubyblock.git

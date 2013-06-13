@@ -13,6 +13,9 @@
 	df = diff
 	dfh = diff HEAD
 	dfc = diff --cached
+	dt = difftool
+	dth = difftool HEAD
+	dtc = difftool --cached
 	ch = whatchanged
 	lg = log -10
 	graph = log --graph --pretty=oneline

@@ -492,7 +492,7 @@ if has("autocmd")
     augroup markdown_files "{{{
         au!
 
-        autocmd filetype markdown noremap <buffer> <leader>p :w<CR>:!open -a Marked %<CR><CR>
+        autocmd filetype markdown noremap <buffer> <leader>o :w<CR>:!open %<CR><CR>
     augroup end " }}}
 
     augroup git_files "{{{

@@ -1,44 +1,53 @@
-# Basic Settings
-#
+# Basic Settings {{{
+
 fontName         = "Inconsolata"
 fontSize         = 16
 
-# Extra files to include
-#
+# }}}
+
+# Extra files to include {{{
+
 myExtraIncludes = ".tm_properties,.htaccess,.gitignore"
 fileBrowserGlob  = "{*,$myExtraIncludes}"
 include = "{$include,$myExtraIncludes}"
 
-# Hide log, vendor and tmp directories from search popups.
-#
+# }}}
+
+# Hide log, vendor and tmp directories from search popups {{{
+
 myExtraExcludes = "log,vendor,tmp,.sass-cache,.DS_Store"
 excludeInFileChooser  = "{$excludeInFileChooser,$myExtraExcludes}"
 excludeInFolderSearch = "{$excludeInFolderSearch,$myExtraExcludes}"
 
 # If you also want to hide them from your project manager pane, add
 # the following line to your project's local .tm_properties.
-#
 #excludeInBrowser      = "{$excludeInBrowser,log,vendor,tmp}"
 
+# }}}
+
+# Misc configuration {{{
+
 # show the path to the current tab's file in the window title
-# (replace the 2 instances of 'username' in the string below
-# with your mac username).
-windowTitle    = "$TM_DISPLAYNAME${TM_DIRECTORY/\A(?:\/Users\/ernesto\w+\/?(.*)|(.+))\z/${2:? – ${2/\A\/Users\/ernesto/~/}:${1/\A(?=.)/ – /}}/}"
+# (replace the 2 instances of 'username' in the string below with your mac username).
+windowTitle = "$TM_DISPLAYNAME${TM_DIRECTORY/\A(?:\/Users\/ernesto\w+\/?(.*)|(.+))\z/${2:? – ${2/\A\/Users\/ernesto/~/}:${1/\A(?=.)/ – /}}/}"
 
 # Configure git
 #
 TM_GIT = "/usr/local/bin/git"
 
-# Default editing configuration
-#
+# }}}
+
+# Default editing configuration {{{
+
 softWrap         = false
 softTabs         = true
 tabSize          = 4
 wrapColumn       = 100
-# | "Use Window Frame" # choose one
 
-# File type specific configuration
-#
+# }}}
+
+# File type specific configuration {{{
+
 [ text ]
 showInvisibles   = true
 
@@ -72,3 +81,5 @@ softWrap         = true
 
 [ *.{html,phtml,php} ]
 softWrap        = false
+
+# }}}

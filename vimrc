@@ -314,7 +314,7 @@ nnoremap <Space> za
 vnoremap <Space> za
 
 " Strip all trailing whitespace from a file
-nnoremap <leader>mw :%s/\s\+$//<CR>:let @/=''<CR>
+nnoremap <leader>mw :FixWhitespace<CR>
 
 " Ack for the word under cursor
 "nnoremap <leader>a :Ack<Space>

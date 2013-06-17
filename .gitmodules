@@ -126,3 +126,6 @@
 [submodule "vim/bundle/textobj-comment"]
 	path = vim/bundle/textobj-comment
 	url = git://github.com/glts/vim-textobj-comment.git
+[submodule "vim/bundle/visual-star-search"]
+	path = vim/bundle/visual-star-search
+	url = git://github.com/nelstrom/vim-visual-star-search.git

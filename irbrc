@@ -3,6 +3,7 @@
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'rubygems'
+require 'interactive_editor'
 
 # Save history between IRB sessions
 IRB.conf[:SAVE_HISTORY] = 1000

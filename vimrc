@@ -500,6 +500,7 @@ if has("autocmd")
 
         autocmd FileType gitconfig setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
         autocmd BufNewFile,BufRead gitconfig setfiletype gitconfig
+        autocmd BufReadPost fugitive://* set bufhidden=delete
     augroup end " }}}
 
     augroup ruby_files "{{{

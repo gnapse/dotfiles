@@ -137,8 +137,8 @@ set directory=~/.vim/.tmp,~/tmp,/tmp
 set viminfo='20,\"80            " read/write a .viminfo file, don't store more
                                 "    than 80 lines of registers
 set wildmenu                    " make tab completion for files/buffers act like bash
-set wildmode=list:full          " show a list when pressing tab and complete
-                                "    first full match
+set wildmode=list:longest       " show a list when pressing tab and complete
+                                "    till longest common string
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set title                       " change the terminal's title
 set visualbell                  " don't beep

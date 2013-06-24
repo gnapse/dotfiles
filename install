@@ -20,6 +20,7 @@ done
 # Set up some extra files and directories
 ln -s -f ~/.dotfiles/zsh/gnapse.zsh-theme ~/.dotfiles/oh-my-zsh/custom/
 ln -s -f ~/.dotfiles/zsh/plugins ~/.dotfiles/oh-my-zsh/custom/
+ln -s -f ~/.dotfiles/tmux/powerlinerc ~/.tmux-powerlinerc
 
 # Set zsh as the default shell
 if [[ $SHELL != "/bin/zsh" ]]; then

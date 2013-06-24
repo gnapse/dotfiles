@@ -129,3 +129,6 @@
 [submodule "vim/bundle/visual-star-search"]
 	path = vim/bundle/visual-star-search
 	url = git://github.com/nelstrom/vim-visual-star-search.git
+[submodule "tmux/powerline"]
+	path = tmux/powerline
+	url = git://github.com/erikw/tmux-powerline.git

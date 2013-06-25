@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+class App
+  def initialize
+    @variant = ARGV.shift if ARGV.first.start_with?("-")
+    @command = ARGV.shift
+    @query = ARGV.join(' ')
+  end
+
+  def run
+    case @command
+    when "list" then cmd "mpc playlist"
+    when "info" then cmd "mpc status"
+    when "random" then cmd "mpc random on"
+    when "ordered" then cmd "mpc random off"
+    when VERBATIM_COMMANDS
+      cmd "mpc #{@command}"
+    when SEARCH_COMMANDS
+      if @variant == "-l"
+        cmd "mpc search #{@command} \"#{@query}\""
+      else
+        cmd "mpc clear" unless @variant == "-a"
+        cmd "mpc search #{@command} \"#{@query}\" | mpc add"
+        cmd "mpc random on" if @variant == "-r"
+        cmd "mpc play"
+      end
+    else
+      puts "Invalid command #{@command}"
+      exit(1)
+    end
+  end
+
+  private
+
+  VERBATIM_COMMANDS = /\A(play|stop|pause|shuffle|prev|next|clear|status|toggle|update)\z/
+  SEARCH_COMMANDS = /\A(album|any|artist|comment|composer|date|disc|filename|genre|name|performer|title|track)\z/
+
+  def cmd(line)
+    system line
+  end
+end
+
+App.new.run

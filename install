@@ -8,13 +8,13 @@ git submodule update
 # Create symlinks to dotfiles
 dotfiles='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc tmux.conf vim vimrc tm_properties'
 for f in $dotfiles; do
-  ln -s -f ~/.dotfiles/$f ~/.$f
+    ln -s -f ~/.dotfiles/$f ~/.$f
 done
 
 # Create symlinks to binary files
 mkdir -p ~/bin
 for f in ~/.dotfiles/bin/*; do
-  ln -s -f $f ~/bin/
+    ln -s -f $f ~/bin/
 done
 
 # Set up some extra files and directories
@@ -24,7 +24,7 @@ ln -s -f ~/.dotfiles/tmux/powerlinerc ~/.tmux-powerlinerc
 
 # Set zsh as the default shell
 if [[ $SHELL != "/bin/zsh" ]]; then
-  chsh -s /bin/zsh
+    chsh -s /bin/zsh
 fi
 
 # We're done

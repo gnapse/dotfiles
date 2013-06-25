@@ -24,6 +24,7 @@ ln -s -f ~/.dotfiles/tmux/powerlinerc ~/.tmux-powerlinerc
 
 # Set zsh as the default shell
 if [[ $SHELL != "/bin/zsh" ]]; then
+    echo "Please provide your password to set zsh as the default shell..."
     chsh -s /bin/zsh
 fi
 

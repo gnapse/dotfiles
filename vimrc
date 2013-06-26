@@ -530,7 +530,6 @@ if has("autocmd")
         au!
 
         autocmd filetype javascript setlocal expandtab
-        autocmd filetype javascript setlocal listchars=trail:·,extends:#,nbsp:·
         autocmd filetype javascript setlocal foldmethod=marker foldmarker={,}
 
         " Toggling True/False

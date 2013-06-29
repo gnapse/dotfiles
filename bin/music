@@ -2,7 +2,8 @@
 
 class App
   def initialize
-    @variant = ARGV.shift if ARGV.first.start_with?("-")
+    @options = ARGV.shift if ARGV.first.start_with?("-")
+    @options = ARGV.pop if ARGV.last.start_with?("-")
     @command = ARGV.shift
     @query = ARGV.join(' ')
   end
@@ -16,12 +17,12 @@ class App
     when VERBATIM_COMMANDS
       cmd "mpc #{@command}"
     when SEARCH_COMMANDS
-      if @variant == "-l"
+      if option?(:l)
         cmd "mpc search #{@command} \"#{@query}\""
       else
-        cmd "mpc clear" unless @variant == "-a"
+        cmd "mpc clear" unless option?(:a)
         cmd "mpc search #{@command} \"#{@query}\" | mpc add"
-        cmd "mpc random on" if @variant == "-r"
+        cmd "mpc random on" if option?(:r)
         cmd "mpc play"
       end
     else
@@ -37,6 +38,10 @@ class App
 
   def cmd(line)
     system line
+  end
+
+  def option?(opt)
+    @options.include?(opt.to_s)
   end
 end
 

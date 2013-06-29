@@ -10,19 +10,20 @@ class App
 
   def run
     case @command
-    when "list" then cmd "mpc playlist"
-    when "info" then cmd "mpc status"
-    when "random" then cmd "mpc random #{@query}"
+    when "list" then list
+    when "info" then cmd "mpc status", true
+    when "random" then cmd "mpc random #{@query}", true
     when VERBATIM_COMMANDS
-      cmd "mpc #{@command}"
+      cmd "mpc #{@command}", true
     when SEARCH_COMMANDS
       if option?(:l)
-        cmd "mpc search #{@command} \"#{@query}\""
+        cmd "mpc search #{@command} \"#{@query}\"", true
       else
         cmd "mpc clear" unless option?(:a)
         cmd "mpc search #{@command} \"#{@query}\" | mpc add"
         cmd "mpc random on" if option?(:r)
-        cmd "mpc play"
+        list
+        cmd "mpc play", true
       end
     else
       puts "Invalid command #{@command}"
@@ -35,12 +36,22 @@ class App
   VERBATIM_COMMANDS = /\A(play|stop|pause|shuffle|prev|next|clear|status|toggle|update)\z/
   SEARCH_COMMANDS = /\A(album|any|artist|comment|composer|date|disc|filename|genre|name|performer|title|track)\z/
 
-  def cmd(line)
-    system line
+  def list
+    cmd "mpc playlist --format=\"%artist% - %album% - %title%\"", true
+  end
+
+  def cmd(line, print_output = false)
+    if print_output
+      system line
+    else
+      `#{line}`
+    end
   end
 
   def option?(opt)
     @options.include?(opt.to_s)
+  rescue
+    false
   end
 end
 

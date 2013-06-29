@@ -13,6 +13,11 @@ class App
     when "list" then list
     when "info" then cmd "mpc status", true
     when "random" then cmd "mpc random #{@query}", true
+    when "shuffle"
+      cmd "mpc random off"
+      cmd "mpc shuffle"
+      list
+      cmd "mpc status"
     when VERBATIM_COMMANDS
       cmd "mpc #{@command}", true
     when SEARCH_COMMANDS
@@ -22,6 +27,10 @@ class App
         cmd "mpc clear" unless option?(:a)
         cmd "mpc search #{@command} \"#{@query}\" | mpc add"
         cmd "mpc random on" if option?(:r)
+        if option?(:s)
+          cmd "mpc random off"
+          cmd "mpc shuffle"
+        end
         list
         cmd "mpc play", true
       end
@@ -33,7 +42,7 @@ class App
 
   private
 
-  VERBATIM_COMMANDS = /\A(play|stop|pause|shuffle|prev|next|clear|status|toggle|update)\z/
+  VERBATIM_COMMANDS = /\A(play|stop|pause|prev|next|clear|status|toggle|update)\z/
   SEARCH_COMMANDS = /\A(album|any|artist|comment|composer|date|disc|filename|genre|name|performer|title|track)\z/
 
   def list

@@ -12,8 +12,7 @@ class App
     case @command
     when "list" then cmd "mpc playlist"
     when "info" then cmd "mpc status"
-    when "random" then cmd "mpc random on"
-    when "ordered" then cmd "mpc random off"
+    when "random" then cmd "mpc random #{@query}"
     when VERBATIM_COMMANDS
       cmd "mpc #{@command}"
     when SEARCH_COMMANDS

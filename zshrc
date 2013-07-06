@@ -33,6 +33,7 @@ plugins=(
     cp
     colored-man
     gnapse
+    projects
 )
 
 # Load Oh-My-Zsh

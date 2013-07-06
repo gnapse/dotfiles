@@ -1,14 +1,3 @@
-c() { cd ~/code/projects/$1; }
-_c() { _files -W ~/code/projects -/; }
-compdef _c c
-
-m() { mate ~/code/projects/$1; }
-_m() { _files -W ~/code/projects -/; }
-compdef _m m
-
-v() { cd ~/code/projects/$1 && mvim && cd - > /dev/null }
-_v() { _files -W ~/code/projects -/; }
-compdef _v v
 
 #export EDITOR='mate -w'
 export EDITOR='vim'

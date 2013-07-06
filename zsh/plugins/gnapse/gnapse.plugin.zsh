@@ -17,6 +17,7 @@ export EDITOR='vim'
 unsetopt correct_all
 
 # a few aliases I like
+alias rv='rbenv'
 alias tlog='tail -f log/development.log'
 alias stree='open -a SourceTree'
 alias gst='git status -sb'

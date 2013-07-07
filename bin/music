@@ -16,8 +16,7 @@ class App
     when "shuffle"
       cmd "mpc random off"
       cmd "mpc shuffle"
-      list
-      cmd "mpc status"
+      list "mpc status"
     when VERBATIM_COMMANDS
       cmd "mpc #{@command}", true
     when SEARCH_COMMANDS
@@ -31,8 +30,7 @@ class App
           cmd "mpc random off"
           cmd "mpc shuffle"
         end
-        list
-        cmd "mpc play", true
+        list "mpc play"
       end
     else
       puts "Invalid command #{@command}"
@@ -45,8 +43,13 @@ class App
   VERBATIM_COMMANDS = /\A(play|stop|pause|prev|next|clear|status|toggle|update)\z/
   SEARCH_COMMANDS = /\A(album|any|artist|comment|composer|date|disc|filename|genre|name|performer|title|track)\z/
 
-  def list
+  def list(extra_command = nil)
+    puts "\nCurrent Playlist"
     cmd "mpc playlist --format=\"%artist% - %album% - %title%\"", true
+    if extra_command
+      puts
+      cmd extra_command, true
+    end
   end
 
   def cmd(line, print_output = false)

@@ -4,8 +4,8 @@ class App
   def initialize
     @options = ARGV.shift if ARGV.first.start_with?("-")
     @options = ARGV.pop if ARGV.last.start_with?("-")
-    @command = ARGV.shift
-    @query = ARGV.join(' ')
+    @command = ARGV.first
+    @query = ARGV.map { |arg| "\"#{arg}\"" }.join(" ")
   end
 
   def run
@@ -22,10 +22,10 @@ class App
       cmd "mpc #{@command}", true
     when SEARCH_COMMANDS
       if option?(:l)
-        cmd "mpc search #{@command} \"#{@query}\"", true
+        cmd "mpc search #{@query}", true
       else
         cmd "mpc clear" unless option?(:a)
-        cmd "mpc search #{@command} \"#{@query}\" | mpc add"
+        cmd "mpc search #{@query} | mpc add"
         cmd "mpc random on" if option?(:r)
         if option?(:s)
           cmd "mpc random off"

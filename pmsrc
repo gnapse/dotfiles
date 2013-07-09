@@ -1,0 +1,25 @@
+set scrolloff=5
+set resetstatus=5
+set mouse
+
+bind ; command-mode
+bind ? help
+
+bind s shuffle
+bind o play
+bind x toggle-select
+
+bind [ prev
+bind ] next
+
+bind d remove
+bind D clear
+
+bind r add-artist
+bind R play-artist
+
+bind f filter
+bind F clear-filters
+
+bind K scroll-up
+bind J scroll-down

@@ -669,6 +669,17 @@ if has("gui_running")
     "set guifont=Ubuntu\ Mono:h18 linespace=3
     "set guifont=Source\ Code\ Pro\ Light:h14 linespace=0
     set guifont=Inconsolata-dz\ for\ Powerline:h14 linespace=0
+else
+    if $TERM_PROGRAM == 'iTerm.app'
+        " different cursors for insert vs normal mode
+        if exists('$TMUX')
+            let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+            let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+        else
+            let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+            let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+        endif
+    endif
 endif
 
 set bg=dark

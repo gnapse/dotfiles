@@ -151,7 +151,11 @@ set showcmd                     " show (partial) command in the last line of the
                                 "    this also shows visual selection info
 set nomodeline                  " disable mode lines (security measure)
 "set ttyfast                     " always use a fast terminal
+
 set cursorline                  " underline the current line, for quick orientation
+autocmd WinLeave * setlocal nocursorline
+autocmd WinEnter * setlocal cursorline
+
 " }}}
 
 " Toggle the quickfix window {{{

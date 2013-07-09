@@ -9,6 +9,8 @@
 "     vim -u NONE
 "
 
+" Basic stuff {{{
+
 " Use vim settings, rather then vi settings (much better!)
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -24,6 +26,8 @@ syntax on
 " Change the mapleader from \ to ,
 let mapleader=","
 let maplocalleader="\\"
+
+" }}}
 
 " Editing behaviour {{{
 set showmode                    " always show what mode we're currently editing in
@@ -206,6 +210,7 @@ endif
 " }}}
 
 " Shortcut mappings {{{
+
 " Since I never use the ; key anyway, this is a real optimization for almost
 " all Vim commands, as I don't have to press the Shift key to form chords to
 " enter ex mode.
@@ -329,6 +334,65 @@ nnoremap <leader>v V`]
 " Gundo.vim
 nnoremap <F5> :GundoToggle<CR>
 nnoremap <leader>mu :GundoToggle<CR>
+
+" Creating underline/overline headings for markup languages
+" Inspired by http://sphinx.pocoo.org/rest.html#sections
+nnoremap <leader>1 yyPVr=jyypVr=
+nnoremap <leader>2 yyPVr*jyypVr*
+nnoremap <leader>3 yypVr=
+nnoremap <leader>4 yypVr-
+nnoremap <leader>5 yypVr^
+nnoremap <leader>6 yypVr"
+
+" C-U in insert/normal mode, to uppercase the word under cursor
+"inoremap <c-u> <esc>viwUea
+"nnoremap <c-u> viwUe
+
+" Quote words under cursor
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+
+" Quote current selection
+" TODO: This only works for selections that are created "forwardly"
+vnoremap <leader>" <esc>a"<esc>gvo<esc>i"<esc>gvo<esc>ll
+vnoremap <leader>' <esc>a'<esc>gvo<esc>i'<esc>gvo<esc>ll
+
+" Use shift-H and shift-L for move to beginning/end
+nnoremap H 0
+nnoremap L $
+
+" Split previously opened file ('#') in a split window
+nnoremap <leader>sh :execute "leftabove vsplit" bufname('#')<cr>
+nnoremap <leader>sl :execute "rightbelow vsplit" bufname('#')<cr>
+
+" Close the current buffer
+map <leader>bd :bd!<cr>
+
+" Close all the buffers
+map <leader>ba :1,1000 bd!<cr>
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>t1 :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+map <leader>t<leader> :tabnext
+
+" git commands shortcuts
+map <leader>ms :Gstatus<cr>
+
+" Add new-line when pressing ENTER in normal mode
+map <CR> o<Esc>
+
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
+
 " }}}
 
 " NERDTree settings {{{
@@ -567,7 +631,13 @@ autocmd BufReadPost *
 " }}}
 
 " Common abbreviations / misspellings {{{
+
 " source ~/.vim/autocorrect.vim
+
+iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit
+iab llorem Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu.  Nulla non quam erat, luctus consequat nisi
+iab lllorem Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu.  Nulla non quam erat, luctus consequat nisi.  Integer hendrerit lacus sagittis erat fermentum tincidunt.  Cras vel dui neque.  In sagittis commodo luctus.  Mauris non metus dolor, ut suscipit dui.  Aliquam mauris lacus, laoreet et consequat quis, bibendum id ipsum.  Donec gravida, diam id imperdiet cursus, nunc nisl bibendum sapien, eget tempor neque elit in tortor
+
 " }}}
 
 " Extra vi-compatibility {{{
@@ -584,18 +654,7 @@ au filetype vim set formatoptions-=o
 " source ~/.vim/user.vim
 " }}}
 
-" Creating underline/overline headings for markup languages
-" Inspired by http://sphinx.pocoo.org/rest.html#sections
-nnoremap <leader>1 yyPVr=jyypVr=
-nnoremap <leader>2 yyPVr*jyypVr*
-nnoremap <leader>3 yypVr=
-nnoremap <leader>4 yypVr-
-nnoremap <leader>5 yypVr^
-nnoremap <leader>6 yypVr"
-
-iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit
-iab llorem Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu.  Nulla non quam erat, luctus consequat nisi
-iab lllorem Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Etiam lacus ligula, accumsan id imperdiet rhoncus, dapibus vitae arcu.  Nulla non quam erat, luctus consequat nisi.  Integer hendrerit lacus sagittis erat fermentum tincidunt.  Cras vel dui neque.  In sagittis commodo luctus.  Mauris non metus dolor, ut suscipit dui.  Aliquam mauris lacus, laoreet et consequat quis, bibendum id ipsum.  Donec gravida, diam id imperdiet cursus, nunc nisl bibendum sapien, eget tempor neque elit in tortor
+" UI behavior {{{
 
 if has("gui_running")
     "set guifont=saxMono:h14 linespace=3
@@ -609,6 +668,8 @@ endif
 
 set bg=dark
 colorscheme molokai
+
+" }}}
 
 " Pulse {{{
 
@@ -657,27 +718,6 @@ let g:Powerline_symbols = 'fancy'
 
 " }}}
 
-" C-U in insert/normal mode, to uppercase the word under cursor
-"inoremap <c-u> <esc>viwUea
-"nnoremap <c-u> viwUe
-
-" Quote words under cursor
-nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
-
-" Quote current selection
-" TODO: This only works for selections that are created "forwardly"
-vnoremap <leader>" <esc>a"<esc>gvo<esc>i"<esc>gvo<esc>ll
-vnoremap <leader>' <esc>a'<esc>gvo<esc>i'<esc>gvo<esc>ll
-
-" Use shift-H and shift-L for move to beginning/end
-nnoremap H 0
-nnoremap L $
-
-" Split previously opened file ('#') in a split window
-nnoremap <leader>sh :execute "leftabove vsplit" bufname('#')<cr>
-nnoremap <leader>sl :execute "rightbelow vsplit" bufname('#')<cr>
-
 " Moving text around {{{
 
 " Indent in and out with Cmd+] and Cmd+[ respectively
@@ -693,38 +733,6 @@ nmap <C-Up> [e
 nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
-
-" }}}
-
-" More key bindings {{{
-
-" Close the current buffer
-map <leader>bd :bd!<cr>
-
-" Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
-
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>t1 :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
-
-" git commands shortcuts
-map <leader>ms :Gstatus<cr>
-
-" Add new-line when pressing ENTER in normal mode
-map <CR> o<Esc>
-
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
 
 " }}}
 

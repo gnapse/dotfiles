@@ -651,7 +651,12 @@ au filetype vim set formatoptions-=o
 " }}}
 
 " Extra user or machine specific settings {{{
-" source ~/.vim/user.vim
+
+try
+    source ~/.vimrc.local
+catch
+endtry
+
 " }}}
 
 " UI behavior {{{

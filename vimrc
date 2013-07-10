@@ -259,15 +259,6 @@ nnoremap <leader>4 yypVr-
 nnoremap <leader>5 yypVr^
 nnoremap <leader>6 yypVr"
 
-" Quote words under cursor
-nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
-
-" Quote current selection
-" TODO: This only works for selections that are created "forwardly"
-vnoremap <leader>" <esc>a"<esc>gvo<esc>i"<esc>gvo<esc>ll
-vnoremap <leader>' <esc>a'<esc>gvo<esc>i'<esc>gvo<esc>ll
-
 " Split previously opened file ('#') in a split window
 nnoremap <leader>sh :execute "leftabove vsplit" bufname('#')<cr>
 nnoremap <leader>sl :execute "rightbelow vsplit" bufname('#')<cr>
@@ -757,5 +748,28 @@ let Tlist_Display_Tag_Scope=0
 
 " show TagList window on the right
 let Tlist_Use_Right_Window=1
+
+" }}}
+
+" Surround characters {{{
+
+" Surround word under the cursor while in normal mode
+nmap <leader>" ysiw"l
+nmap <leader>' ysiw'l
+nmap <leader>` ysiw`l
+nmap <leader>( ysiw)l
+nmap <leader>{ ysiw}l
+nmap <leader>[ ysiw]l
+nmap <leader>< ysiw>l
+
+" Surround text currently selected while in visual mode
+" (The surrounded text is kept selected after being surround)
+vmap <leader>" S"lvi"
+vmap <leader>' S'lvi'
+vmap <leader>` S`lvi`
+vmap <leader>( S)lvi(
+vmap <leader>{ S}lvi{
+vmap <leader>[ S]lvi[
+vmap <leader>< S>lvi<
 
 " }}}

@@ -312,6 +312,18 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
+" Quickly switch to the alternate buffer
+nnoremap <leader><leader> <c-^>
+
+" Increment and decrement numbers with <leader>m2/m1
+" (Specially because <C-a> is commonly used as Tmux bind-key)
+nmap <leader>m2 <C-a>
+nmap <leader>m1 <C-x>
+
+" Search and replace using perl regexp engine
+nmap <leader>r :%s/\v
+vmap <leader>r :s/\v
+
 " }}}
 
 " Folding {{{

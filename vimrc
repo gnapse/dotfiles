@@ -9,7 +9,7 @@
 "     vim -u NONE
 "
 
-" Basic stuff {{{
+" Basic settings {{{
 
 " Use vim settings, rather then vi settings (much better!)
 " This must be first, because it changes other options as a side effect.
@@ -21,15 +21,29 @@ filetype off                    " force reloading *after* pathogen loaded
 call pathogen#infect()
 call pathogen#helptags()
 filetype plugin indent on       " enable detection, plugins and indenting in one step
-syntax on
 
-" Change the mapleader from \ to ,
-let mapleader=","
-let maplocalleader="\\"
+" switch colors and syntax highlighting on, if supported
+if &t_Co > 2 || has("gui_running")
+    syntax on
+    set bg=dark
+    colorscheme molokai
+endif
+
+" Set gui font
+if has("gui_running")
+    set guifont=Inconsolata-dz\ for\ Powerline:h14 linespace=0
+endif
+
+" Extra user or machine specific settings
+try
+    source ~/.vimrc.local
+catch
+endtry
 
 " }}}
 
-" Editing behaviour {{{
+" Options {{{
+
 set showmode                    " always show what mode we're currently editing in
 set nowrap                      " don't wrap lines
 set expandtab                   " expand tabs by default (overloadable per file type later)
@@ -72,54 +86,6 @@ set nrformats=                  " make <C-a> and <C-x> play well with
                                 "    zero-padded numbers (i.e. don't consider
                                 "    them octal or hex)
 
-" Toggle show/hide invisible chars
-nnoremap <leader>mi :set list!<cr>
-
-" Thanks to Steve Losh for this liberating tip
-" See http://stevelosh.com/blog/2010/09/coming-home-to-vim
-nnoremap / /\v
-vnoremap / /\v
-
-" Speed up scrolling of the viewport slightly
-nnoremap <C-e> 2<C-e>
-nnoremap <C-y> 2<C-y>
-" }}}
-
-" Folding rules {{{
-set foldenable                  " enable folding
-set foldcolumn=2                " add a fold column
-set foldmethod=marker           " detect triple-{ style fold markers
-set foldlevelstart=99           " start out with everything folded
-set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
-                                " which commands trigger auto-unfold
-function! MyFoldText()
-    let line = getline(v:foldstart)
-
-    let nucolwidth = &fdc + &number * &numberwidth
-    let windowwidth = winwidth(0) - nucolwidth - 3
-    let foldedlinecount = v:foldend - v:foldstart
-
-    " expand tabs into spaces
-    let onetab = strpart('          ', 0, &tabstop)
-    let line = substitute(line, '\t', onetab, 'g')
-
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-    let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 4
-    return line . ' …' . repeat(" ",fillcharcount) . foldedlinecount . ' '
-endfunction
-set foldtext=MyFoldText()
-" }}}
-
-" Editor layout {{{
-set termencoding=utf-8
-set encoding=utf-8
-set lazyredraw                  " don't update the display while executing macros
-set laststatus=2                " tell VIM to always put a status line in, even
-                                "    if there is only one window
-set cmdheight=2                 " use a status bar that is 2 rows high
-" }}}
-
-" Vim behaviour {{{
 set hidden                      " hide buffers instead of closing them this
                                 "    means that the current buffer can be put
                                 "    to background without being written; and
@@ -159,68 +125,31 @@ set cursorline                  " underline the current line, for quick orientat
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
 
+set termencoding=utf-8
+set encoding=utf-8
+set lazyredraw                  " don't update the display while executing macros
+set laststatus=2                " tell VIM to always put a status line in, even
+                                "    if there is only one window
+set cmdheight=2                 " use a status bar that is 2 rows high
+
+" set extra vi-compatible options
+set cpoptions+=$     " when changing a line, don't redisplay, but put a '$' at
+                     " the end during the change
+set formatoptions-=o " don't start new lines w/ comment leader on pressing 'o'
+au filetype vim set formatoptions-=o
+                     " somehow, during vim filetype detection, this gets set
+                     " for vim files, so explicitly unset it again
+
 " }}}
 
-" Toggle the quickfix window {{{
-" From Steve Losh, http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
-nnoremap <C-q> :call <SID>QuickfixToggle()<cr>
+" Key-bindings {{{
 
-let g:quickfix_is_open = 0
+" Change the mapleader from \ to ,
+let mapleader=","
+let maplocalleader="\\"
 
-function! s:QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-        execute g:quickfix_return_to_window . "wincmd w"
-    else
-        let g:quickfix_return_to_window = winnr()
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
-" }}}
-
-" Toggle relative/absolute line numbers {{{
-nnoremap <leader>mn :call LineNumbersToggle()<cr>
-let g:absolute_line_numbers = 1
-
-function! LineNumbersToggle()
-    if g:absolute_line_numbers
-        let g:absolute_line_numbers = 0
-        set relativenumber
-    else
-        let g:absolute_line_numbers = 1
-        set number
-    endif
-endfunction
-" }}}
-
-" Toggle the foldcolumn {{{
-nnoremap <leader>mf :call FoldColumnToggle()<cr>
-
-let g:last_fold_column_width = 4  " Pick a sane default for the foldcolumn
-
-function! FoldColumnToggle()
-    if &foldcolumn
-        let g:last_fold_column_width = &foldcolumn
-        setlocal foldcolumn=0
-    else
-        let &l:foldcolumn = g:last_fold_column_width
-    endif
-endfunction
-" }}}
-
-" Highlighting {{{
-if &t_Co > 2 || has("gui_running")
-   syntax on                    " switch syntax highlighting on, when the terminal has colors
-endif
-" }}}
-
-" Shortcut mappings {{{
-
-" Since I never use the ; key anyway, this is a real optimization for almost
-" all Vim commands, as I don't have to press the Shift key to form chords to
-" enter ex mode.
+" The ; key is not that useful in command mode by default, so re-map it to
+" enter command mode and avoid having to press Shift to type the : symbol.
 nnoremap ; :
 nnoremap <leader>; ;
 
@@ -231,6 +160,12 @@ vnoremap <F1> <ESC>
 
 " Quickly close the current window
 nnoremap <leader>q :q<CR>
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" Sudo to write
+cnoremap w!! w !sudo tee % >/dev/null
 
 " Use Q for formatting the current paragraph (or visual selection)
 vnoremap Q gq
@@ -255,6 +190,10 @@ noremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
+" Quickly get out of insert mode without your fingers having
+" to leave the home row (either use 'jj' or 'jk')
+inoremap jj <Esc>
+
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -265,13 +204,13 @@ noremap <C-l> <C-w>l
 inoremap <C-f> <C-x><C-f>
 inoremap <C-l> <C-x><C-l>
 
+" Quick yanking to the end of the line
+nnoremap Y y$
+
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
 nnoremap <silent> <leader>d "_d
 vnoremap <silent> <leader>d "_d
-
-" Quick yanking to the end of the line
-nnoremap Y y$
 
 " Yank/paste to the OS clipboard with ,y and ,p
 nnoremap <leader>y "+y
@@ -279,68 +218,37 @@ nnoremap <leader>Y "+yy
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 
-" YankRing stuff
-let g:yankring_history_dir = '$HOME/.vim/tmp'
-nnoremap <leader>my :YRShow<CR>
-
-" Edit the vimrc file
-nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
-nnoremap <silent> <leader>vs :so $MYVIMRC<CR>
-
 " Clears the search register
 nnoremap <silent> <leader>/ :nohlsearch<CR>
 
 " Turn off highlighting search results
 nnoremap <leader><space> :noh<cr>
 
-" Pull word under cursor into LHS of a substitute (for quick search and
-" replace)
-nnoremap <leader>mz :%s#\<<C-r>=expand("<cword>")<CR>\>#
-
-" Keep search matches in the middle of the window and pulse the line when moving
-" to them.
-nnoremap n n:call PulseCursorLine()<cr>
-nnoremap N N:call PulseCursorLine()<cr>
-
-" Quickly get out of insert mode without your fingers having to leave the
-" home row (either use 'jj' or 'jk')
-inoremap jj <Esc>
-
 " Quick alignment of text
 nnoremap <leader>al :left<CR>
 nnoremap <leader>ar :right<CR>
 nnoremap <leader>ac :center<CR>
 
-" Fast saving
-nmap <leader>w :w!<cr>
-
-" Sudo to write
-cnoremap w!! w !sudo tee % >/dev/null
-
 " Jump to matching pairs easily, with Tab
 nnoremap <Tab> %
 vnoremap <Tab> %
 
-" Folding
-nnoremap <Space> za
-vnoremap <Space> za
+" Use shift-H and shift-L for move to beginning/end
+nnoremap H 0
+nnoremap L $
 
-" Strip all trailing whitespace from a file
-nnoremap <leader>mw :FixWhitespace<CR>
+" Edit the vimrc file
+nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
+nnoremap <silent> <leader>vs :so $MYVIMRC<CR>
 
-" Ack for the word under cursor
-"nnoremap <leader>a :Ack<Space>
-nnoremap <leader>ma :Ack<Space><c-r><c-W>
+" Pull word under cursor into LHS of a substitute (for quick search and replace)
+nnoremap <leader>mz :%s#\<<C-r>=expand("<cword>")<CR>\>#
 
-" Creating folds for tags in HTML
-"nnoremap <leader>ft Vatzf
+" Toggle show/hide invisible chars
+nnoremap <leader>mi :set list!<cr>
 
 " Reselect text that was just pasted with ,v
 nnoremap <leader>v V`]
-
-" Gundo.vim
-nnoremap <F5> :GundoToggle<CR>
-nnoremap <leader>mu :GundoToggle<CR>
 
 " Creating underline/overline headings for markup languages
 " Inspired by http://sphinx.pocoo.org/rest.html#sections
@@ -351,10 +259,6 @@ nnoremap <leader>4 yypVr-
 nnoremap <leader>5 yypVr^
 nnoremap <leader>6 yypVr"
 
-" C-U in insert/normal mode, to uppercase the word under cursor
-"inoremap <c-u> <esc>viwUea
-"nnoremap <c-u> viwUe
-
 " Quote words under cursor
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
@@ -363,10 +267,6 @@ nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 " TODO: This only works for selections that are created "forwardly"
 vnoremap <leader>" <esc>a"<esc>gvo<esc>i"<esc>gvo<esc>ll
 vnoremap <leader>' <esc>a'<esc>gvo<esc>i'<esc>gvo<esc>ll
-
-" Use shift-H and shift-L for move to beginning/end
-nnoremap H 0
-nnoremap L $
 
 " Split previously opened file ('#') in a split window
 nnoremap <leader>sh :execute "leftabove vsplit" bufname('#')<cr>
@@ -385,9 +285,6 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>t<leader> :tabnext
 
-" git commands shortcuts
-map <leader>ms :Gstatus<cr>
-
 " Add new-line when pressing ENTER in normal mode
 map <CR> o<Esc>
 
@@ -400,71 +297,113 @@ map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
 
-" }}}
+" Use perl regular expressions syntax by default
+" Thanks to Steve Losh for this liberating tip
+" See http://stevelosh.com/blog/2010/09/coming-home-to-vim
+nnoremap / /\v
+vnoremap / /\v
 
-" NERDTree settings {{{
-" Put focus to the NERD Tree with F3 (tricked by quickly closing it and
-" immediately showing it again, since there is no :NERDTreeFocus command)
-nnoremap <leader>mf :NERDTreeToggle<CR>
+" Speed up scrolling of the viewport slightly
+nnoremap <C-e> 2<C-e>
+nnoremap <C-y> 2<C-y>
 
-" Store the bookmarks file
-let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
+" Indent in and out with Cmd+] and Cmd+[ respectively
+if has("mac") || has("macunix")
+    nmap <D-[> <<
+    nmap <D-]> >>
+    vmap <D-[> <gv
+    vmap <D-]> >gv
+endif
 
-" Show the bookmarks table on startup
-let NERDTreeShowBookmarks=1
-
-" Show hidden files, too
-let NERDTreeShowFiles=1
-let NERDTreeShowHidden=1
-
-" Quit on opening files from the tree
-let NERDTreeQuitOnOpen=1
-
-" Highlight the selected entry in the tree
-let NERDTreeHighlightCursorline=1
-
-" Use a single click to fold/unfold directories and a double click to open
-" files
-let NERDTreeMouseMode=2
-
-" Don't display these kinds of files
-let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
-            \ '\.o$', '\.so$', '\.egg$', '^\.git$' ]
+" Bubble single and multiple lines up and down
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
 
 " }}}
 
-" TagList settings {{{
-nnoremap <leader>mg :TlistToggle<CR>
+" Folding {{{
 
-" quit Vim when the TagList window is the last open window
-let Tlist_Exit_OnlyWindow=1         " quit when TagList is the last open window
-let Tlist_GainFocus_On_ToggleOpen=1 " put focus on the TagList window when it opens
-"let Tlist_Process_File_Always=1     " process files in the background, even when the TagList window isn't open
-"let Tlist_Show_One_File=1           " only show tags from the current buffer, not all open buffers
-let Tlist_WinWidth=40               " set the width
-let Tlist_Inc_Winwidth=1            " increase window by 1 when growing
+set foldenable                  " enable folding
+set foldcolumn=2                " add a fold column
+set foldmethod=marker           " detect triple-{ style fold markers
+set foldlevelstart=99           " start out with everything folded
+set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
+                                " which commands trigger auto-unfold
+function! MyFoldText()
+    let line = getline(v:foldstart)
 
-" shorten the time it takes to highlight the current tag (default is 4 secs)
-" note that this setting influences Vim's behaviour when saving swap files,
-" but we have already turned off swap files (earlier)
-"set updatetime=1000
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
 
-" the default ctags in /usr/bin on the Mac is GNU ctags, so change it to the
-" exuberant ctags version in /usr/local/bin
-let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
 
-" show function/method prototypes in the list
-let Tlist_Display_Prototype=1
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 4
+    return line . ' …' . repeat(" ",fillcharcount) . foldedlinecount . ' '
+endfunction
+set foldtext=MyFoldText()
 
-" don't show scope info
-let Tlist_Display_Tag_Scope=0
+" Toggle fold by pressing <Space>
+nnoremap <Space> za
+vnoremap <Space> za
 
-" show TagList window on the right
-let Tlist_Use_Right_Window=1
+" Creating folds for tags in HTML
+"nnoremap <leader>ft Vatzf
 
 " }}}
 
-" Filetype specific handling {{{
+" Toggles {{{
+
+" Toggle the quickfix window
+" From Steve Losh, http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
+nnoremap <C-q> :call <SID>QuickfixToggle()<cr>
+let g:quickfix_is_open = 0
+function! s:QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+        execute g:quickfix_return_to_window . "wincmd w"
+    else
+        let g:quickfix_return_to_window = winnr()
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+
+" Toggle relative/absolute line numbers
+nnoremap <leader>mn :call LineNumbersToggle()<cr>
+let g:absolute_line_numbers = 1
+function! LineNumbersToggle()
+    if g:absolute_line_numbers
+        let g:absolute_line_numbers = 0
+        set relativenumber
+    else
+        let g:absolute_line_numbers = 1
+        set number
+    endif
+endfunction
+
+" Toggle the foldcolumn
+nnoremap <leader>mf :call FoldColumnToggle()<cr>
+let g:last_fold_column_width = 4  " Pick a sane default for the foldcolumn
+function! FoldColumnToggle()
+    if &foldcolumn
+        let g:last_fold_column_width = &foldcolumn
+        setlocal foldcolumn=0
+    else
+        let &l:foldcolumn = g:last_fold_column_width
+    endif
+endfunction
+
+" }}}
+
+" Filetype settings {{{
+
 " only do this part when compiled with support for autocommands
 if has("autocmd")
     augroup invisible_chars "{{{
@@ -628,13 +567,7 @@ if has("autocmd")
         autocmd BufWrite *.coffee :FixWhitespace
     " }}}
 endif
-" }}}
 
-" Restore cursor position upon reopening files {{{
-autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
 " }}}
 
 " Common abbreviations / misspellings {{{
@@ -647,38 +580,17 @@ iab lllorem Lorem ipsum dolor sit amet, consectetur adipiscing elit.  Etiam lacu
 
 " }}}
 
-" Extra vi-compatibility {{{
-" set extra vi-compatible options
-set cpoptions+=$     " when changing a line, don't redisplay, but put a '$' at
-                     " the end during the change
-set formatoptions-=o " don't start new lines w/ comment leader on pressing 'o'
-au filetype vim set formatoptions-=o
-                     " somehow, during vim filetype detection, this gets set
-                     " for vim files, so explicitly unset it again
-" }}}
+" Behavior improvements {{{
 
-" Extra user or machine specific settings {{{
+" Restore cursor position upon reopening files
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
 
-try
-    source ~/.vimrc.local
-catch
-endtry
-
-" }}}
-
-" UI behavior {{{
-
-if has("gui_running")
-    "set guifont=saxMono:h14 linespace=3
-    "set guifont=Anonymous\ for\ Powerline:h12 linespace=2
-    "set guifont=Mensch\ for\ Powerline:h14 linespace=0
-    "set guifont=Droid\ Sans\ Mono:h14 linespace=0
-    "set guifont=Ubuntu\ Mono:h18 linespace=3
-    "set guifont=Source\ Code\ Pro\ Light:h14 linespace=0
-    set guifont=Inconsolata-dz\ for\ Powerline:h14 linespace=0
-else
+" Different cursors for insert vs normal mode
+if !has("gui_running")
     if $TERM_PROGRAM == 'iTerm.app'
-        " different cursors for insert vs normal mode
         if exists('$TMUX')
             let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
             let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
@@ -689,12 +601,10 @@ else
     endif
 endif
 
-set bg=dark
-colorscheme molokai
-
-" }}}
-
-" Pulse {{{
+" Keep search matches in the middle of the window
+" and pulse the line when moving to them.
+nnoremap n n:call PulseCursorLine()<cr>
+nnoremap N N:call PulseCursorLine()<cr>
 
 function! PulseCursorLine()
     let current_window = winnr()
@@ -732,38 +642,6 @@ function! PulseCursorLine()
     execute current_window . 'wincmd w'
 endfunction
 
-" }}}
-
-" Powerline configuration {{{
-
-"let g:Powerline_symbols = 'compatible'
-let g:Powerline_symbols = 'fancy'
-
-" }}}
-
-" Moving text around {{{
-
-" Indent in and out with Cmd+] and Cmd+[ respectively
-if has("mac") || has("macunix")
-  nmap <D-[> <<
-  nmap <D-]> >>
-  vmap <D-[> <gv
-  vmap <D-]> >gv
-endif
-
-" Bubble single and multiple lines up and down
-nmap <C-Up> [e
-nmap <C-Down> ]e
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
-
-" }}}
-
-" Diff with original {{{
-
-" Diff the current buffer against the unmodifed version on disk
-map <leader>df :DiffSaved<CR>
-
 " Diff the current buffer against the unmodifed version on disk
 function! s:DiffWithSaved()
     let filetype=&ft
@@ -773,31 +651,111 @@ function! s:DiffWithSaved()
     exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
 com! DiffSaved call s:DiffWithSaved()
+map <leader>df :DiffSaved<CR>
 
 " }}}
 
-" Ctrl-p plugin {{{
+" Various plugin options and key-bindings {{{
 
+" YankRing stuff
+let g:yankring_history_dir = '$HOME/.vim/tmp'
+nnoremap <leader>my :YRShow<CR>
+
+" Strip all trailing whitespace from a file
+nnoremap <leader>mw :FixWhitespace<CR>
+
+" Ack for the word under cursor
+nnoremap <leader>ma :Ack<Space><c-r><c-W>
+
+" Gundo.vim
+nnoremap <leader>mu :GundoToggle<CR>
+
+" git commands shortcuts
+map <leader>ms :Gstatus<cr>
+
+" Ctrl-p
 let g:ctrlp_working_path_mode = 0
-
 let g:ctrlp_max_height = 20
 let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
-
 map <leader>mt :CtrlP<CR>
 map <leader>mb :CtrlPBuffer<CR>
 map <leader>mr :CtrlPMRU<CR>
 map <leader>mm :CtrlPMixed<CR>
 
-" }}}
+" Powerline
+"let g:Powerline_symbols = 'compatible'
+let g:Powerline_symbols = 'fancy'
 
-" Smooth scroll {{{
-
+" Smooth scrolling
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 20, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 20, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 30, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 30, 4)<CR>
-
 noremap <silent> <PageUp> :call smooth_scroll#up(&scroll, 20, 2)<CR>
 noremap <silent> <PageDown> :call smooth_scroll#down(&scroll, 20, 2)<CR>
+
+" }}}
+
+" NERDTree settings {{{
+
+" Put focus to the NERD Tree with F3 (tricked by quickly closing it and
+" immediately showing it again, since there is no :NERDTreeFocus command)
+nnoremap <leader>mf :NERDTreeToggle<CR>
+
+" Store the bookmarks file
+let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
+
+" Show the bookmarks table on startup
+let NERDTreeShowBookmarks=1
+
+" Show hidden files, too
+let NERDTreeShowFiles=1
+let NERDTreeShowHidden=1
+
+" Quit on opening files from the tree
+let NERDTreeQuitOnOpen=1
+
+" Highlight the selected entry in the tree
+let NERDTreeHighlightCursorline=1
+
+" Use a single click to fold/uncold directories and a double click
+" to open files
+let NERDTreeMouseMode=2
+
+" Don't display these kinds of files
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
+            \ '\.o$', '\.so$', '\.egg$', '^\.git$' ]
+
+" }}}
+
+" TagList settings {{{
+
+nnoremap <leader>mg :TlistToggle<CR>
+
+" quit Vim when the TagList window is the last open window
+let Tlist_Exit_OnlyWindow=1         " quit when TagList is the last open window
+let Tlist_GainFocus_On_ToggleOpen=1 " put focus on the TagList window when it opens
+"let Tlist_Process_File_Always=1     " process files in the background, even when the TagList window isn't open
+"let Tlist_Show_One_File=1           " only show tags from the current buffer, not all open buffers
+let Tlist_WinWidth=40               " set the width
+let Tlist_Inc_Winwidth=1            " increase window by 1 when growing
+
+" shorten the time it takes to highlight the current tag (default is 4 secs)
+" note that this setting influences Vim's behaviour when saving swap files,
+" but we have already turned off swap files (earlier)
+"set updatetime=1000
+
+" the default ctags in /usr/bin on the Mac is GNU ctags, so change it to the
+" exuberant ctags version in /usr/local/bin
+let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+
+" show function/method prototypes in the list
+let Tlist_Display_Prototype=1
+
+" don't show scope info
+let Tlist_Display_Tag_Scope=0
+
+" show TagList window on the right
+let Tlist_Use_Right_Window=1
 
 " }}}

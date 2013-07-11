@@ -222,7 +222,7 @@ nnoremap <leader>P "+P
 nnoremap <silent> <leader>/ :nohlsearch<CR>
 
 " Turn off highlighting search results
-nnoremap <leader><space> :noh<cr>
+nnoremap <cr> :noh<cr>
 
 " Quick alignment of text
 nnoremap <leader>al :left<CR>
@@ -275,9 +275,6 @@ map <leader>t1 :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>t<leader> :tabnext
-
-" Add new-line when pressing ENTER in normal mode
-map <CR> o<Esc>
 
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>

@@ -144,3 +144,7 @@
 [submodule "vim/bundle/smooth-scroll"]
 	path = vim/bundle/smooth-scroll
 	url = git://github.com/terryma/vim-smooth-scroll.git
+[submodule "vim/bundle/textobj-fold"]
+	path = vim/bundle/textobj-fold
+	url = git://github.com/kana/vim-textobj-fold.git
+	ignore = dirty

@@ -96,7 +96,7 @@ set history=1000                " remember more commands and search history
 set undolevels=1000             " use many muchos levels of undo
 
 set undofile                    " keep a persistent backup file
-set undodir=~/.vim/tmp/undo
+set undodir=~/.tmp/vim/undo
 if !isdirectory(expand(&undodir))
     call mkdir(expand(&undodir), "p")
 endif
@@ -104,7 +104,7 @@ endif
 set nobackup                    " do not keep backup files, it's 70's style cluttering
 set noswapfile                  " do not write annoying intermediate swap files,
                                 "    who did ever restore from swap files anyway?
-set directory=~/.vim/.tmp,~/tmp,/tmp
+set directory=~/.tmp/vim
                                 " store swap files in one of these directories
                                 "    (in case swapfile is ever turned on)
 set viminfo='20,\"80            " read/write a .viminfo file, don't store more
@@ -658,7 +658,7 @@ map <leader>df :DiffSaved<CR>
 " Various plugin options and key-bindings {{{
 
 " YankRing stuff
-let g:yankring_history_dir = '$HOME/.vim/tmp'
+let g:yankring_history_dir = '$HOME/.tmp/vim'
 nnoremap <leader>my :YRShow<CR>
 
 " Strip all trailing whitespace from a file

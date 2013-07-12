@@ -9,9 +9,10 @@ COMPLETION_WAITING_DOTS="true"
 
 # Update PATH with some useful dirs
 typeset -U path
-path=(~/.rbenv/shims ~/.rbenv/bin ~/bin ~/.dotfiles/bin /usr/local/bin $path)
+path=(~/bin ~/.dotfiles/bin /usr/local/bin $path)
 
 # Add RBENV support
+path=(~/.rbenv/shims ~/.rbenv/bin $path)
 eval "$(rbenv init -)"
 
 # List of Oh-My-Zsh plugins to load

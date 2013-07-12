@@ -11,7 +11,7 @@ unsetopt correct_all
 
 # Update PATH with some useful dirs
 typeset -U path
-path=(~/.rbenv/shims ~/.rbenv/bin ~/bin /usr/local/bin $path)
+path=(~/.rbenv/shims ~/.rbenv/bin ~/bin ~/.dotfiles/bin /usr/local/bin $path)
 
 # Add RBENV support
 eval "$(rbenv init -)"

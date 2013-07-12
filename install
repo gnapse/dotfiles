@@ -11,12 +11,6 @@ for f in $dotfiles; do
     ln -s -f ~/.dotfiles/$f ~/.$f
 done
 
-# Create symlinks to binary files
-mkdir -p ~/bin
-for f in ~/.dotfiles/bin/*; do
-    ln -s -f $f ~/bin/
-done
-
 # Set up some extra files and directories
 ln -s -f ~/.dotfiles/zsh/gnapse.zsh-theme ~/.dotfiles/oh-my-zsh/custom/
 ln -s -f ~/.dotfiles/zsh/plugins ~/.dotfiles/oh-my-zsh/custom/

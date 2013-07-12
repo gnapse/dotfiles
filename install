@@ -1,16 +1,24 @@
 #!/usr/bin/env sh
 
-# Grab all the submodules
+# Install dependencies {{{
+
+echo "Installing dependencies..."
+
+# Submodules
 cd ~/.dotfiles
-git submodule init
-git submodule update
+git submodule --quiet init
+git submodule --quiet update
 
-# Install and setup rbenv
-echo "Installing rbenv..."
-git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+# rbenv
+git clone --quiet git://github.com/sstephenson/rbenv.git ~/.rbenv
+git clone --quiet git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
-# Create symlinks to dotfiles
+# }}}
+
+# Create symlinks {{{
+
+echo "Creating symlinks..."
+
 dotfiles='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc tmux.conf vim vimrc tm_properties rbenv'
 for f in $dotfiles; do
     ln -s -f ~/.dotfiles/$f ~/.$f
@@ -21,11 +29,16 @@ ln -s -f ~/.dotfiles/zsh/gnapse.zsh-theme ~/.dotfiles/oh-my-zsh/custom/
 ln -s -f ~/.dotfiles/zsh/plugins ~/.dotfiles/oh-my-zsh/custom/
 ln -s -f ~/.dotfiles/tmux/powerlinerc ~/.tmux-powerlinerc
 
-# Set zsh as the default shell
+# }}}
+
+# Set zsh as the default shell {{{
+
 if [[ $SHELL != "/bin/zsh" ]]; then
-    echo "Please provide your password to set zsh as the default shell..."
+    echo "Setting zsh as the default shell..."
     chsh -s /bin/zsh
 fi
+
+# }}}
 
 # We're done
 echo "Start a new terminal and enjoy!"

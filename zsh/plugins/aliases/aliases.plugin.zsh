@@ -1,3 +1,8 @@
+VIMRC_SENSIBLE=~/.vim/bundle/sensible/plugin/sensible.vim
+alias vims='vim -u $VIMRC_SENSIBLE'
+alias mvims='mvim -u $VIMRC_SENSIBLE'
+alias gvims='gvim -u $VIMRC_SENSIBLE'
+
 alias rv='rbenv'
 alias tlog='tail -f log/development.log'
 alias stree='open -a SourceTree'

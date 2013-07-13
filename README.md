@@ -16,6 +16,8 @@ git clone git://github.com/gnapse/dotfiles ~/.dotfiles
 ~/.dotfiles/install
 ```
 
+Note that the install location `~/.dotfiles` is arbitrary. You can install to any directory of your choice.
+
 After installing, open a new terminal window to see the effects.
 
 ## Features

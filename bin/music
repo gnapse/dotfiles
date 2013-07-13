@@ -12,7 +12,7 @@ class App
     case @command
     when "list" then list
     when "info" then cmd "mpc status", true
-    when "player" then exec "pms -c ~/.dotfiles/pmsrc"
+    when "player" then exec "pms -c #{ENV['DOTFILES']}/pmsrc"
     when "shuffle"
       cmd "mpc random off"
       cmd "mpc shuffle"

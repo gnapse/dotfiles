@@ -1,5 +1,6 @@
 EDITOR="vim"
-ZSH=$HOME/.dotfiles/oh-my-zsh
+export DOTFILES=$(dirname `readlink ~/.zshrc`)
+ZSH=$DOTFILES/oh-my-zsh
 ZSH_THEME="gnapse"
 
 DISABLE_AUTO_UPDATE="true"
@@ -9,7 +10,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # Update PATH with some useful dirs
 typeset -U path
-path=(~/bin ~/.dotfiles/bin /usr/local/bin $path)
+path=(~/bin $DOTFILES/bin /usr/local/bin $path)
 
 # Add RBENV support
 path=(~/.rbenv/shims ~/.rbenv/bin $path)

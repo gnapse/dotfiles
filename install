@@ -1,11 +1,13 @@
 #!/usr/bin/env sh
 
+DOTFILES=$(dirname `readlink $0`)
+
 # Install dependencies {{{
 
 echo "Installing dependencies..."
 
 # Submodules
-cd ~/.dotfiles
+cd $DOTFILES
 git submodule --quiet init
 git submodule --quiet update
 
@@ -19,15 +21,15 @@ git clone --quiet git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/r
 
 echo "Creating symlinks..."
 
-dotfiles='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc tmux.conf vim vimrc tm_properties rbenv'
-for f in $dotfiles; do
-    ln -s -f ~/.dotfiles/$f ~/.$f
+symlinks='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc tmux.conf vim vimrc tm_properties rbenv'
+for f in $symlinks; do
+    ln -s -f $DOTFILES/$f ~/.$f
 done
 
 # Set up some extra files and directories
-ln -s -f ~/.dotfiles/zsh/gnapse.zsh-theme ~/.dotfiles/oh-my-zsh/custom/
-ln -s -f ~/.dotfiles/zsh/plugins ~/.dotfiles/oh-my-zsh/custom/
-ln -s -f ~/.dotfiles/tmux/powerlinerc ~/.tmux-powerlinerc
+ln -s -f $DOTFILES/zsh/gnapse.zsh-theme $DOTFILES/oh-my-zsh/custom/
+ln -s -f $DOTFILES/zsh/plugins $DOTFILES/oh-my-zsh/custom/
+ln -s -f $DOTFILES/tmux/powerlinerc ~/.tmux-powerlinerc
 
 # }}}
 

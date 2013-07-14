@@ -44,13 +44,14 @@ class App
   SEARCH_COMMANDS = /\A(album|any|artist|comment|composer|date|disc|filename|genre|name|performer|title|track)\z/
 
   def list(extra_command = nil)
+    list_command = "mpc playlist --format=\"%position% ~ %artist% ~ %album% ~ %title% ~ %time%\" | align '~' '  '"
     if extra_command
       puts "\nCurrent Playlist"
-      cmd "mpc playlist --format=\"%artist% - %album% - %title%\"", true
+      cmd list_command, true
       puts
       cmd extra_command, true
     else
-      cmd "mpc playlist --format=\"%artist% - %album% - %title%\" | less -ciN~", true
+      cmd "#{list_command} | less -ci~", true
     end
   end
 

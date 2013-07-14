@@ -1,0 +1,101 @@
+#!/usr/bin/env ruby
+
+#
+# Aligns text from standard input.
+#
+# Usage:
+#   command_with_output_to_align | align <splitter> [joiner]
+#
+# Example:
+#
+# Given the following input:
+#
+# 1 - Metallica - Master of puppets - Battery - 5:13
+# 2 - Metallica - Master of puppets - Master of puppets - 8:36
+# 3 - Metallica - Master of puppets - Orion (Instrumental) - 8:28
+# 4 - Nirvana - Nevermind - Smells like teen spirit - 5:01
+# 5 - Nirvana - Nevermind - Come as you are - 3:39
+# 6 - Nirvana - Nevermind - Something in the way - 3:51
+# 7 - Pink Floyd - The Wall 1 - In the Flesh - 3:20
+# 8 - Pink Floyd - The Wall 1 - The Thin Ice - 2:30
+# 9 - Pink Floyd - The Wall 1 - Another Brick in the Wall (Part I) - 3:10
+#
+# The command
+#
+# align - '|'
+#
+# will yield the following output
+#
+# 1 | Metallica  | Master of puppets | Battery                            | 5:13
+# 2 | Metallica  | Master of puppets | Master of puppets                  | 8:36
+# 3 | Metallica  | Master of puppets | Orion (Instrumental)               | 8:28
+# 4 | Nirvana    | Nevermind         | Smells like teen spirit            | 5:01
+# 5 | Nirvana    | Nevermind         | Come as you are                    | 3:39
+# 6 | Nirvana    | Nevermind         | Something in the way               | 3:51
+# 7 | Pink Floyd | The Wall 1        | In the Flesh                       | 3:20
+# 8 | Pink Floyd | The Wall 1        | The Thin Ice                       | 2:30
+# 9 | Pink Floyd | The Wall 1        | Another Brick in the Wall (Part I) | 3:10
+#
+# If the second argument is omitted, the same separator is kept in the output.
+#
+
+class SplitLine
+  attr_reader :line, :columns
+
+  def initialize(line, aligner)
+    @aligner = aligner
+    @line = line
+    @columns = @line.split(@aligner.splitter)
+  end
+
+  def columns_count
+    @columns.length
+  end
+
+  def column_width(index)
+    @columns[index].length
+  rescue
+    0
+  end
+
+  def aligned_columns
+    widths = @aligner.columns_widths
+    (0...@columns.length).map { |i| @columns[i].ljust(widths[i]) }
+  end
+
+  def aligned
+    aligned_columns.join(@aligner.joiner)
+  end
+end
+
+class LineAligner
+  attr_reader :splitter, :joiner
+  attr_reader :columns_count, :lines
+
+  def initialize(splitter, joiner = nil)
+    @splitter = splitter
+    @joiner = joiner || splitter
+    @lines = $stdin.readlines.map { |line| SplitLine.new(line.strip, self) }
+    @columns_count = @lines.map(&:columns_count).max
+  end
+
+  def print
+    @lines.each { |line| puts line.aligned }
+  end
+
+  def columns_widths
+    @columns_widths ||= begin
+      arr = [0] * @columns_count
+      @lines.each do |line|
+        @columns_count.times do |i|
+          v = line.column_width(i)
+          arr[i] = v if v > arr[i]
+        end
+      end
+      arr
+    end
+  end
+end
+
+aligner = LineAligner.new *ARGV
+aligner.print

@@ -1,4 +1,4 @@
-EDITOR="vim"
+export EDITOR="vim"
 export DOTFILES=$(dirname `readlink ~/.zshrc`)
 ZSH=$DOTFILES/oh-my-zsh
 ZSH_THEME="gnapse"

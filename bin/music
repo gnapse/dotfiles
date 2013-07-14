@@ -2,8 +2,8 @@
 
 class App
   def initialize
-    @options = ARGV.shift if ARGV.first.start_with?("-")
-    @options = ARGV.pop if ARGV.last.start_with?("-")
+    @options = ARGV.shift if ARGV.first =~ /\A-[a-z]+\z/
+    @options = ARGV.pop if ARGV.last =~ /\A-[a-z]+\z/
     @command = ARGV.first
     @query = ARGV.map { |arg| "\"#{arg}\"" }.join(" ")
   end
@@ -40,7 +40,7 @@ class App
 
   private
 
-  VERBATIM_COMMANDS = /\A(play|stop|pause|prev|next|clear|status|toggle|update|crop|current|del|move|random)\z/
+  VERBATIM_COMMANDS = /\A(play|stop|pause|prev|next|clear|status|toggle|update|crop|current|del|move|random|volume)\z/
   SEARCH_COMMANDS = /\A(album|any|artist|comment|composer|date|disc|filename|genre|name|performer|title|track)\z/
 
   def list(extra_command = nil)

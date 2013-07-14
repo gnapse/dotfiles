@@ -327,7 +327,7 @@ vmap <leader>r :s/\v
 
 set foldenable                  " enable folding
 set foldcolumn=2                " add a fold column
-set foldmethod=marker           " detect triple-{ style fold markers
+set foldmethod=syntax           " fold according to language syntax
 set foldlevelstart=99           " start out with everything folded
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
                                 " which commands trigger auto-unfold
@@ -418,6 +418,8 @@ if has("autocmd")
 
     augroup vim_files "{{{
         au!
+
+        autocmd filetype vim setlocal foldmethod=marker
 
         " Bind <F1> to show the keyword under cursor
         " general help can still be entered manually, with :h
@@ -565,6 +567,12 @@ if has("autocmd")
         autocmd BufWrite *.js :FixWhitespace
         autocmd BufWrite *.css :FixWhitespace
         autocmd BufWrite *.coffee :FixWhitespace
+    augroup end "}}}
+
+    augroup shell_scripts "{{{
+        au!
+
+        autocmd filetype zsh,sh setlocal foldmethod=marker
     augroup end "}}}
 endif
 

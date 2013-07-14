@@ -565,7 +565,7 @@ if has("autocmd")
         autocmd BufWrite *.js :FixWhitespace
         autocmd BufWrite *.css :FixWhitespace
         autocmd BufWrite *.coffee :FixWhitespace
-    " }}}
+    augroup end "}}}
 endif
 
 " }}}

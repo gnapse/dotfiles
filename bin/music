@@ -10,13 +10,13 @@ class App
 
   def run
     case @command
-    when "list" then list
+    when "list"
+      exec "mpc playlist --format=\"%position% ~ %artist% ~ %album% ~ %title% ~ %time%\" | align '~' '  ' | less -ci~"
     when "info" then cmd "mpc status", true
     when "player" then exec "pms -c #{ENV['DOTFILES']}/pmsrc"
     when "shuffle"
       cmd "mpc random off"
-      cmd "mpc shuffle"
-      list "mpc status"
+      cmd "mpc shuffle", true
     when VERBATIM_COMMANDS
       cmd "mpc #{@query}", true
     when SEARCH_COMMANDS
@@ -30,7 +30,7 @@ class App
           cmd "mpc random off"
           cmd "mpc shuffle"
         end
-        list "mpc play"
+        cmd "mpc play", true
       end
     else
       puts "Invalid command #{@command}"
@@ -42,18 +42,6 @@ class App
 
   VERBATIM_COMMANDS = /\A(play|stop|pause|prev|next|clear|status|toggle|update|crop|current|del|move|random|volume)\z/
   SEARCH_COMMANDS = /\A(album|any|artist|comment|composer|date|disc|filename|genre|name|performer|title|track)\z/
-
-  def list(extra_command = nil)
-    list_command = "mpc playlist --format=\"%position% ~ %artist% ~ %album% ~ %title% ~ %time%\" | align '~' '  '"
-    if extra_command
-      puts "\nCurrent Playlist"
-      cmd list_command, true
-      puts
-      cmd extra_command, true
-    else
-      cmd "#{list_command} | less -ci~", true
-    end
-  end
 
   def cmd(line, print_output = false)
     if print_output

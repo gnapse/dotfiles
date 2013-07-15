@@ -45,3 +45,5 @@ plugins=(
 # Load Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
 
+# Load local settings, if any
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

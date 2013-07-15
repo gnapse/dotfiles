@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-DOTFILES=$(dirname `readlink $0`)
+DOTFILES=$(dirname $0)
 
 # Install dependencies {{{
 

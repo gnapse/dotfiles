@@ -14,6 +14,7 @@ class App
       exec "mpc playlist --format=\"%position% ~ %artist% ~ %album% ~ %title% ~ %time%\" | align '~' '  ' | less -ci~"
     when "info" then cmd "mpc status", true
     when "player" then exec "pms -c #{ENV['DOTFILES']}/pmsrc"
+    when "lyrics" then lyrics
     when "shuffle"
       cmd "mpc random off"
       cmd "mpc shuffle", true
@@ -48,6 +49,17 @@ class App
       system line
     else
       `#{line}`
+    end
+  end
+
+  def lyrics
+    require 'taglib'
+    file = "#{ENV['HOME']}/.music/#{`mpc current --format=%file%`}".strip
+    TagLib::MPEG::File.open(file) do |file|
+      tag = file.id3v2_tag
+      lyrics = tag.frame_list("USLT").first || "(No lyrics)"
+      title = `mpc current --format="%title% - %artist%"`
+      IO.popen("less -ci~", "w") { |f| f.puts "#{title}\n\n#{lyrics}" }
     end
   end
 

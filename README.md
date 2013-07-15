@@ -23,6 +23,8 @@ After installing, open a new terminal window to see the effects.
 
 ## Features
 
+![gnapse/dotfiles features screenshot](https://dl.dropboxusercontent.com/u/6173591/gnapse-dotfiles.png)
+
 These dotfiles make use of [oh-my-zsh][] and are of course zsh-centric. Lots of
 other features are being configured by loading some built-in plugins within
 `oh-my-zsh`.  My own customizations are provided via [some custom plugins and

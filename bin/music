@@ -21,18 +21,7 @@ class App
     when VERBATIM_COMMANDS
       cmd "mpc #{@query}", true
     when SEARCH_COMMANDS
-      if option?(:l)
-        cmd "mpc search #{@query}", true
-      else
-        cmd "mpc clear" unless option?(:a)
-        cmd "mpc search #{@query} | mpc add"
-        cmd "mpc random on" if option?(:r)
-        if option?(:s)
-          cmd "mpc random off"
-          cmd "mpc shuffle"
-        end
-        cmd "mpc play", true
-      end
+      search
     else
       puts "Invalid command #{@command}"
       exit(1)
@@ -49,6 +38,21 @@ class App
       system line
     else
       `#{line}`
+    end
+  end
+
+  def search
+    if option?(:l)
+      cmd "mpc search #{@query}", true
+    else
+      cmd "mpc clear" unless option?(:a)
+      cmd "mpc search #{@query} | mpc add"
+      cmd "mpc random on" if option?(:r)
+      if option?(:s)
+        cmd "mpc random off"
+        cmd "mpc shuffle"
+      end
+      cmd "mpc play", true
     end
   end
 

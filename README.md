@@ -25,15 +25,20 @@ After installing, open a new terminal window to see the effects.
 
 ![gnapse/dotfiles features screenshot](https://dl.dropboxusercontent.com/u/6173591/gnapse-dotfiles.png)
 
-These dotfiles make use of [oh-my-zsh][] and are of course zsh-centric. Lots of
+These dotfiles make use of [Oh-My-Zsh][] and are of course zsh-centric. Lots of
 other features are being configured by loading some built-in plugins within
-`oh-my-zsh`.  My own customizations are provided via [some custom plugins and
+Oh-My-Zsh.  My own customizations are provided via [some custom plugins and
 a theme][].
 
-There are also configuration files for git, ruby/rails development, [tmux][],
-[TextMate][] and Vim.  On the Vim front, lots of different plugins are being
-loaded using [pathogen][], linked from other public repos as git submodules.
-Check out the [`vim/bundle`][vim-bundle] directory for details.
+There are also configuration files for git, [tmux][], [TextMate][] and Vim.  On
+the Vim front, lots of different plugins are being loaded using [pathogen][],
+linked from other public repos as git submodules.  Check out the
+[`vim/bundle`][vim-bundle] directory for details.
+
+[Ruby][] and [Rails][] have a special place here as well.  Vim has all the
+essential plugins one would expect for developing Rails, including support for
+Haml, Sass, CoffeeScript, etc.  The shell is equiped right from the start with
+[rbenv][], and all relevant Oh-My-Zsh plugins are loaded too.
 
 Additionally, these dotfiles are [mpd][]-oriented. If you use mpd to play your
 music, try the `music help` command and enjoy.  Also notice that tmux's
@@ -54,10 +59,13 @@ for this repo:
 * [Drew Neil](https://github.com/nelstrom) for [Vimcasts](http://vimcasts.org)
 * [Vincent Driessen](https://github.com/nvie) for inspiring most of my `.vimrc`.
 
-[oh-my-zsh]: http://github.com/robbyrussell/oh-my-zsh
+[Oh-My-Zsh]: http://github.com/robbyrussell/oh-my-zsh
 [some custom plugins and a theme]: https://github.com/gnapse/dotfiles/tree/master/zsh
 [tmux]: http://tmux.sourceforge.net
 [TextMate]:  http://github.com/textmate/textmate
 [pathogen]: http://github.com/tpope/vim-pathogen
 [vim-bundle]: https://github.com/gnapse/dotfiles/tree/master/vim/bundle
 [mpd]: http://www.musicpd.org/
+[rbenv]: https://github.com/sstephenson/rbenv
+[Ruby]: http://www.ruby-lang.org/
+[Rails]: http://rubyonrails.org/

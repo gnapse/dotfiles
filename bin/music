@@ -15,6 +15,7 @@ class App
     when "info" then cmd "mpc status", true
     when "player" then exec "pms -c #{ENV['DOTFILES']}/pmsrc"
     when "lyrics" then lyrics
+    when "help" then help
     when "shuffle"
       cmd "mpc random off"
       cmd "mpc shuffle", true
@@ -63,8 +64,59 @@ class App
       tag = file.id3v2_tag
       lyrics = tag.frame_list("USLT").first || "(No lyrics)"
       title = `mpc current --format="%title% - %artist%"`
-      IO.popen("less -ci~", "w") { |f| f.puts "#{title}\n\n#{lyrics}" }
+      less "#{title}\n\n#{lyrics}"
     end
+  end
+
+  def help
+    less <<-eos
+    Advanced CLI interface to MPD.
+
+    Usage:
+      music <command> [arguments]
+      music [options] <search-criteria> <value> [<search-criteria> <value]+
+
+    Valid commands:
+      list               - displays the list of songs currently playing
+      lyrics             - displays the lyrics of the current song
+      player             - loads an interactive music player interface
+      current            - displays basic information about the current song
+      info               - displays more detailed information about the current song
+      prev               - go back and play the previous song in the list
+      next               - go forward and play the next song in the list
+      play               - start playing the current playlist
+      stop               - stop playing music
+      toggle             - toggle playing music
+      crop               - remove all songs from playlist except the one that is currently playing
+      del [number]       - remove the specified song from the playlist, or the current song if none given
+      move <from> <to>   - moves the song at position to another position in the playlist
+      shuffle            - shuffle the list of songs currently playing
+      random [on|off]    - play songs in the current playlist in random order
+      volume [+/-n]      - displays or changes the volume
+      <search-criteria>  - see below
+
+    Search:
+      Allows to find any desired music and quickly start listening to it.
+      Note: By default, the results of a search will replace the current playlist.
+
+    Valid option flags:
+      -a adds to playlist, instead of replacing.
+      -l only list the search results, without modifying the playlist.
+      -r turns random on after adding results to playlist.
+      -s shuffle playlist after adding. Overrides the -r option.
+
+    Examples:
+      $ music album puppet                            # load all songs from albums with names mathing "puppet"
+      $ music title "Enter sandman" artist Metallica  # load all songs by Metallica with the given name
+      $ music date 1991 genre metal                   # load all metal songs from 1991
+
+    Valid search criteria:
+      album, any, artist, comment, composer, date, disc, filename, genre, name, performer, title, track
+    eos
+  end
+
+  def less(str)
+    IO.popen("less -ci~", "w") { |f| f.puts str }
   end
 
   def option?(opt)

@@ -32,6 +32,10 @@ There's also configuration files for git, ruby/rails development, [tmux][],
 loaded using [pathogen][], linked from other public repos as git submodules.
 Check out the [`vim/bundle`][vim-bundle] directory for details.
 
+Additionally, these dotfiles are [mpd][]-oriented. If you use mpd to play your
+music, try the `music help` command and enjoy.  Also notice that tmux's
+powerline status bar shows the song currently playing on mpd.
+
 ## Credits
 
 My only merit here is having assembled various pieces of configuration files
@@ -53,3 +57,4 @@ for this repo:
 [TextMate]:  http://github.com/textmate/textmate
 [pathogen]: http://github.com/tpope/vim-pathogen
 [vim-bundle]: https://github.com/gnapse/dotfiles/tree/master/vim/bundle
+[mpd]: http://www.musicpd.org/

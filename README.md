@@ -16,7 +16,8 @@ git clone git://github.com/gnapse/dotfiles ~/.dotfiles
 ~/.dotfiles/install
 ```
 
-Note that the install location `~/.dotfiles` is arbitrary. You can install to any directory of your choice.
+Note that the install location `~/.dotfiles` is arbitrary. You can install to
+any directory of your choice.
 
 After installing, open a new terminal window to see the effects.
 
@@ -24,10 +25,10 @@ After installing, open a new terminal window to see the effects.
 
 These dotfiles make use of [oh-my-zsh][] and are of course zsh-centric. Lots of
 other features are being configured by loading some built-in plugins within
-`oh-my-zsh`.  My own customizations are provided via a [custom plugin and
-theme][].
+`oh-my-zsh`.  My own customizations are provided via [some custom plugins and
+a theme][].
 
-There's also configuration files for git, ruby/rails development, [tmux][],
+There are also configuration files for git, ruby/rails development, [tmux][],
 [TextMate][] and Vim.  On the Vim front, lots of different plugins are being
 loaded using [pathogen][], linked from other public repos as git submodules.
 Check out the [`vim/bundle`][vim-bundle] directory for details.
@@ -52,7 +53,7 @@ for this repo:
 * [Vincent Driessen](https://github.com/nvie) for inspiring most of my `.vimrc`.
 
 [oh-my-zsh]: http://github.com/robbyrussell/oh-my-zsh
-[custom plugin and theme]: https://github.com/gnapse/dotfiles/tree/master/zsh
+[some custom plugins and a theme]: https://github.com/gnapse/dotfiles/tree/master/zsh
 [tmux]: http://tmux.sourceforge.net
 [TextMate]:  http://github.com/textmate/textmate
 [pathogen]: http://github.com/tpope/vim-pathogen

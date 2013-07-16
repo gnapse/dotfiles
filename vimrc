@@ -702,6 +702,9 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 30, 4)<CR>
 noremap <silent> <PageUp> :call smooth_scroll#up(&scroll, 20, 2)<CR>
 noremap <silent> <PageDown> :call smooth_scroll#down(&scroll, 20, 2)<CR>
 
+" Nested markdown folding
+let g:markdown_fold_style = 'nested'
+
 " }}}
 
 " NERDTree settings {{{

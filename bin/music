@@ -9,6 +9,7 @@ class App
     opts = Slop.parse help: true do
       command :search do
         banner App.help_for(:search)
+        on 'p', 'no-pager', 'Print out the search results, without using a pager to display it.'
         run { |opts, args| app.search(args, opts) }
       end
 
@@ -103,7 +104,11 @@ class App
     end
 
     query = args.map { |arg| "\"#{arg}\"" }.join(" ")
-    cmd :yield, "mpc search #{query} | #{LESS}"
+    if opts[:"no-pager"]
+      cmd :yield, "mpc search #{query}"
+    else
+      cmd :yield, "mpc search #{query} | #{LESS}"
+    end
   end
 
   def add(args, opts)

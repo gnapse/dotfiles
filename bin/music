@@ -20,6 +20,7 @@ class App
         on 'c', 'clear', 'Clear playlist before adding new tracks.'
         on 'p', 'no-pager', 'Print out the list, without using a pager to display it.'
         on 'q', 'quiet', 'Exit without displaying the playlist.'
+        on 'n', 'dry-run', 'Do not add anything, just show the search results.'
         run { |opts, args| app.add(args, opts) }
       end
 
@@ -114,6 +115,11 @@ class App
   def add(args, opts)
     if args.empty?
       puts opts
+      return
+    end
+
+    if opts[:"dry-run"]
+      search(args, opts)
       return
     end
 

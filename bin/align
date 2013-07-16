@@ -4,7 +4,7 @@
 # Aligns text from standard input.
 #
 # Usage:
-#   command_with_output_to_align | align <splitter> [joiner]
+#   command_with_output_to_align | align --splitter <splitter> --joiner <joiner> --alignment <alignment>
 #
 # Example:
 #
@@ -22,7 +22,7 @@
 #
 # The command
 #
-# align - '|'
+# $ align --splitter '-' --joiner '|'
 #
 # will yield the following output
 #
@@ -36,7 +36,13 @@
 # 8 | Pink Floyd | The Wall 1        | The Thin Ice                       | 2:30
 # 9 | Pink Floyd | The Wall 1        | Another Brick in the Wall (Part I) | 3:10
 #
-# If the second argument is omitted, the same separator is kept in the output.
+# If the joiner is omitted, the splitter is used instead.
+#
+# The <alignment> options is used to control the alignment of the columns in
+# the output.  It consists of a string of 'L' or 'R' characters, each
+# associated to the corresponding column in the output.  For a character 'L',
+# the corresponding column is aligned to the left, and for characters 'R', the
+# column is aligned to the right.
 #
 
 class SplitLine
@@ -60,7 +66,9 @@ class SplitLine
 
   def aligned_columns
     widths = @aligner.columns_widths
-    (0...@columns.length).map { |i| @columns[i].ljust(widths[i]) }
+    (0...@columns.length).map do |i|
+      @columns[i].send(@aligner.alignment(i), widths[i]) 
+    end
   end
 
   def aligned
@@ -72,9 +80,10 @@ class LineAligner
   attr_reader :splitter, :joiner
   attr_reader :columns_count, :lines
 
-  def initialize(splitter, joiner = nil)
-    @splitter = splitter
-    @joiner = joiner || splitter
+  def initialize(opts)
+    @splitter = opts[:splitter]
+    @joiner = opts[:joiner] || opts[:splitter]
+    @alignment = opts[:alignment].to_s.upcase
     @lines = $stdin.readlines.map { |line| SplitLine.new(line.strip, self) }
     @columns_count = @lines.map(&:columns_count).max
   end
@@ -95,7 +104,25 @@ class LineAligner
       arr
     end
   end
+
+  def alignment(column_index)
+    @alignment[column_index] == 'R' ? 'rjust' : 'ljust'
+  rescue
+    'ljust'
+  end
+
+  def self.run
+    require 'slop'
+
+    opts = Slop.parse help: true do
+      on 's', 'splitter=', 'The pattern used to split input lines into columns.'
+      on 'j', 'joiner=', 'The pattern used to join columns to form output lines.'
+      on 'a', 'alignment=', 'A string indicating how to align each column in the output.'
+    end
+
+    aligner = LineAligner.new opts
+    aligner.print
+  end
 end
 
-aligner = LineAligner.new *ARGV
-aligner.print
+LineAligner.run

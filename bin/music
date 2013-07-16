@@ -1,132 +1,329 @@
 #!/usr/bin/env ruby
 
+require 'slop'
+
 class App
-  def initialize
-    @options = ARGV.shift if ARGV.first =~ /\A-[a-z]+\z/
-    @options = ARGV.pop if ARGV.last =~ /\A-[a-z]+\z/
-    @command = ARGV.first
-    @query = ARGV.map { |arg| "\"#{arg}\"" }.join(" ")
-  end
+  def self.run
+    app = App.new
 
-  def run
-    case @command
-    when "list"
-      exec "mpc playlist #{FORMAT} | #{ALIGN} | #{LESS}"
-    when "info" then cmd "mpc status", true
-    when "player" then exec "pms -c #{ENV['DOTFILES']}/pmsrc"
-    when "lyrics" then lyrics
-    when "help" then help
-    when "shuffle"
-      cmd "mpc random off"
-      cmd "mpc shuffle", true
-    when VERBATIM_COMMANDS
-      cmd "mpc #{@query}", true
-    when SEARCH_COMMANDS
-      search
-    else
-      puts "Invalid command #{@command}"
-      exit(1)
-    end
-  end
-
-  private
-
-  VERBATIM_COMMANDS = /\A(play|stop|pause|prev|next|clear|status|toggle|update|crop|current|del|move|random|volume)\z/
-  SEARCH_COMMANDS = /\A(album|any|artist|comment|composer|date|disc|filename|genre|name|performer|title|track)\z/
-  FORMAT = '--format="%position% ~ %title% ~ %time% ~ %artist% ~ %album%"'
-  LESS = 'less -ci~'
-  ALIGN = 'align -s "~" -j "  " -a RLRLL'
-
-  def cmd(line, print_output = false)
-    if print_output
-      system line
-    else
-      `#{line}`
-    end
-  end
-
-  def search
-    if option?(:l)
-      cmd "mpc search #{@query}", true
-    else
-      cmd "mpc clear" unless option?(:a)
-      cmd "mpc search #{@query} | mpc add"
-      cmd "mpc random on" if option?(:r)
-      if option?(:s)
-        cmd "mpc random off"
-        cmd "mpc shuffle"
+    opts = Slop.parse help: true do
+      command :search do
+        banner App.help_for(:search)
+        run { |opts, args| app.search(args, opts) }
       end
-      cmd "mpc play", true
+
+      command :add do
+        banner App.help_for(:add)
+        on 'r', 'random', 'Play tracks in random order.'
+        on 's', 'shuffle', 'Shuffle playlist. Overrides --random.'
+        on 'c', 'clear', 'Clear playlist before adding new tracks.'
+        on 'p', 'no-pager', 'Print out the list, without using a pager to display it.'
+        on 'q', 'quiet', 'Exit without displaying the playlist.'
+        run { |opts, args| app.add(args, opts) }
+      end
+
+      command :list do
+        banner App.help_for(:list)
+        on 'p', 'no-pager', 'Print out the list, without using a pager to display it.'
+        run { |opts| app.list(opts) }
+      end
+
+      command :lyrics do
+        banner App.help_for(:lyrics)
+        on 'p', 'no-pager', 'Print out the lyrics, without using a pager to display them.'
+        run { |opts| app.lyrics(opts) }
+      end
+
+      command :shuffle do
+        banner App.help_for(:shuffle)
+        on 'p', 'no-pager', 'Print out the playlist, without using a pager to display it.'
+        on 'q', 'quiet', 'Exit without printing the playlist at all.'
+        run { |opts| app.shuffle(opts) }
+      end
+
+      command :player do
+        banner App.help_for(:player)
+        run { app.player }
+      end
+
+      command :del do
+        banner App.help_for(:del)
+        run { |opts, args| app.delete(opts, args) }
+      end
+
+      command :move do
+        banner App.help_for(:move)
+        run { |opts, args| app.move(opts, args) }
+      end
+
+      command :vol do
+        banner App.help_for(:vol)
+        on 'q', 'quiet', 'Do not print out the volume.'
+        run { |opts, args| app.volume(opts, args) }
+      end
+
+      command :random do
+        banner App.help_for(:random)
+        on 'q', 'quiet', 'Do not print out the volume.'
+        run { |opts, args| app.random(opts, args) }
+      end
+
+      VERBATIM_COMMANDS.each_key do |cmd|
+        command cmd do
+          banner App.help_for(cmd)
+          run { |opts, args| app.verbatim(cmd, opts, args) }
+        end
+      end
     end
   end
 
-  def lyrics
+  # Command methods
+
+  def verbatim(command, opts, args)
+    unless args.empty?
+      puts opts
+      return
+    end
+    cmd :yield, "mpc #{command}"
+  end
+
+  def volume(opts, args)
+    cmd :quiet, "mpc volume #{args.first}" unless args.empty?
+    cmd :yield, "mpc volume" unless opts[:quiet]
+  end
+
+  def player
+    cmd :yield, "pms -c #{ENV['DOTFILES']}/pmsrc"
+  end
+
+  def search(args, opts)
+    if args.empty?
+      puts opts
+      return
+    end
+
+    query = args.map { |arg| "\"#{arg}\"" }.join(" ")
+    cmd :yield, "mpc search #{query} | #{LESS}"
+  end
+
+  def add(args, opts)
+    if args.empty?
+      puts opts
+      return
+    end
+
+    query = args.map { |arg| "\"#{arg}\"" }.join(" ")
+    cmd :quiet, "mpc clear" if opts[:clear]
+    cmd :quiet, "mpc search #{query} | mpc add"
+
+    if opts[:shuffle]
+      cmd :quiet, "mpc random off"
+      cmd :quiet, "mpc shuffle"
+    else
+      cmd :quiet, "mpc random on" if opts[:random]
+    end
+
+    cmd :quiet, "mpc play"
+    list(opts) unless opts[:quiet]
+  end
+
+  def shuffle(opts)
+    cmd :quiet, "mpc random off"
+    cmd :quiet, "mpc shuffle"
+    list(opts) unless opts[:quiet]
+  end
+
+  def list(opts)
+    if opts[:"no-pager"]
+      cmd :yield, "mpc playlist #{FORMAT} | #{ALIGN}"
+    else
+      cmd :yield, "mpc playlist #{FORMAT} | #{ALIGN} | #{LESS}"
+    end
+  end
+
+  def lyrics(opts)
     require 'taglib'
     file = "#{ENV['HOME']}/.music/#{`mpc current --format=%file%`}".strip
     TagLib::MPEG::File.open(file) do |file|
       tag = file.id3v2_tag
       lyrics = tag.frame_list("USLT").first || "(No lyrics)"
       title = `mpc current --format="%title% - %artist%"`
-      less "#{title}\n\n#{lyrics}"
+      print "#{title}\n#{lyrics}", opts
     end
   end
 
-  def help
-    less <<-eos
-    Advanced CLI interface to MPD.
-
-    Usage:
-      music <command> [arguments]
-      music [options] <search-criteria> <value> [<search-criteria> <value]+
-
-    Valid commands:
-      list               - displays the list of songs currently playing
-      lyrics             - displays the lyrics of the current song
-      player             - loads an interactive music player interface
-      current            - displays basic information about the current song
-      info               - displays more detailed information about the current song
-      prev               - go back and play the previous song in the list
-      next               - go forward and play the next song in the list
-      play               - start playing the current playlist
-      stop               - stop playing music
-      toggle             - toggle playing music
-      crop               - remove all songs from playlist except the one that is currently playing
-      del [number]       - remove the specified song from the playlist, or the current song if none given
-      move <from> <to>   - moves the song at position to another position in the playlist
-      shuffle            - shuffle the list of songs currently playing
-      random [on|off]    - play songs in the current playlist in random order
-      volume [+/-n]      - displays or changes the volume
-      <search-criteria>  - see below
-
-    Search:
-      Allows to find any desired music and quickly start listening to it.
-      Note: By default, the results of a search will replace the current playlist.
-
-    Valid option flags:
-      -a adds to playlist, instead of replacing.
-      -l only list the search results, without modifying the playlist.
-      -r turns random on after adding results to playlist.
-      -s shuffle playlist after adding. Overrides the -r option.
-
-    Examples:
-      $ music album puppet                            # load all songs from albums with names mathing "puppet"
-      $ music title "Enter sandman" artist Metallica  # load all songs by Metallica with the given name
-      $ music date 1991 genre metal                   # load all metal songs from 1991
-
-    Valid search criteria:
-      album, any, artist, comment, composer, date, disc, filename, genre, name, performer, title, track
-    eos
+  def delete(opts, args)
+    unless args.length >= 2
+      puts opts
+      return
+    end
+    if args.empty?
+      cmd :yield, "mpc del 0"
+    else
+      cmd :yield, "mpc del #{args.first}"
+    end
   end
 
-  def less(str)
-    IO.popen(LESS, "w") { |f| f.puts str }
+  def move(opts, args)
+    unless args.length == 2
+      puts opts
+      return
+    end
+    from, to = args
+    cmd :yield, "mpc move #{from} #{to}"
   end
 
-  def option?(opt)
-    @options.include?(opt.to_s)
-  rescue
-    false
+  def random(opts, args)
+    arg = args.first.to_s.downcase
+    if args.length > 1 || ![nil, "on", "off"].include?(arg)
+      puts opts
+      return
+    end
+    cmd :yield, "mpc random #{arg}"
   end
+
+  private
+
+  # Helper methods
+
+  FORMAT = '--format="%position% ~ %title% ~ %time% ~ %artist% ~ %album%"'
+  LESS = 'less -ci~'
+  ALIGN = 'align -s "~" -j "  " -a RLRLL'
+
+  def cmd(mode, str)
+    case mode
+    when :print then system(str)
+    when :yield then exec(str)
+    else `#{str}`
+    end
+  end
+
+  def print(str, opts)
+    opts[:"no-pager"] ? puts(str) : IO.popen(LESS, "w") { |f| f.puts str }
+  end
+
+  # Help messages
+
+  def self.help_for(command)
+    msg = HELP[command.to_sym]
+    if msg.nil?
+      msg = HELP[:default]
+      msg = msg.gsub(":command", command.to_s)
+      msg = msg.gsub(":description", VERBATIM_COMMANDS[command])
+    end
+    msg.gsub(/^ {6}/, "  ") + "\n  Valid options:"
+  end
+
+  VERBATIM_COMMANDS = {
+    play: "Starts playback.",
+    stop: "Stops playback.",
+    pause: "Pauses playback.",
+    toggle: "Toggles playback (play/pause)",
+    next: "Plays the next song in the list.",
+    prev: "Plays the previous song in the list.",
+    clear: "Empties the playlist.",
+    current: "Shows basic information about the current song.",
+    status: "Shows detailed information about the current song.",
+    crop: "Removes all songs from the playlist except the one currently playing.",
+  }
+
+  HELP = {
+    default: %Q{
+      Usage:
+        music :command
+
+      :description
+    },
+
+    search: %Q{
+      Usage:
+        music search <criteria> <value> [<criteria> <value>]*
+
+      Searches for music in the mpd library.
+
+      Examples:
+        $ music search album puppet                            # load all songs from albums with names mathing "puppet"
+        $ music search title "Enter sandman" artist Metallica  # load all songs by Metallica with the given name
+        $ music search date 1991 genre metal                   # load all metal songs from 1991
+
+      Valid search criteria:
+        album, any, artist, comment, composer, date, disc, filename, genre, name, performer, title, track
+    },
+
+    add: %Q{
+      Usage:
+        music add [options] <criteria> <value> [<criteria> <value>]*
+
+      Searches for music to add to the current playlist.
+      Run 'music search --help' for details on how to search.
+    },
+
+    list: %Q{
+      Usage:
+        music list [options]
+
+      Displays the current playlist.
+    },
+
+    lyrics: %Q{
+      Usage:
+        music lyrics [options]
+
+      Displays the lyrics of the song that is currently being played.
+    },
+
+    player: %Q{
+      Usage:
+        music player
+
+      Loads an interactive music player to interface with mpd.
+    },
+
+    shuffle: %Q{
+      Usage:
+        music shuffle
+
+      Shuffles the playlist, and optionally prints it out to show the results.
+    },
+
+    del: %Q{
+      Usage:
+        music del [position]
+
+      Removes from the playlist the song at the specified position.
+      If no position is given, the current song is removed instead.
+    },
+
+    move: %Q{
+      Usage:
+        music move <from> <to>
+
+      Moves a song in the playlist from one position to another.
+    },
+
+    vol: %Q{
+      Usage:
+        music vol [+/-num]
+
+      Changes the current volume, either to an absolute percent value, or by incrementing or decrementing it.
+      If no argument is given, it displays the current volume setting and exits.
+
+      Examples:
+        $ music vol +5    # increments the current volume by 5%
+        $ music vol -10   # decrements the current volume by 10%
+        $ music vol 80    # sets current volume to exactly 80%
+        $ music vol       # displays the current volume without changing it.
+    },
+
+    random: %Q{
+      Usage:
+        music random [on|off]
+
+      Sets or unsets random playlist order during playback.
+      If no argument is given, then it toggles the random state.
+    },
+  }
+
 end
 
-App.new.run
+App.run

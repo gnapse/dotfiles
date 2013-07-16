@@ -142,3 +142,9 @@
 	path = vim/bundle/textobj-fold
 	url = git://github.com/kana/vim-textobj-fold.git
 	ignore = dirty
+[submodule "vim/bundle/addon-mw-utils"]
+	path = vim/bundle/addon-mw-utils
+	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "vim/bundle/tlib"]
+	path = vim/bundle/tlib
+	url = git://github.com/tomtom/tlib_vim.git

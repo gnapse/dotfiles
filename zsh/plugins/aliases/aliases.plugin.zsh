@@ -15,3 +15,8 @@ alias rscp='rsync --partial --progress --rsh=ssh'
 # recursively download a website
 alias rwget='wget -r -k -p -np -E'
 
+# Create and cd into a new directory in one step
+mcd() {
+    mkdir -p $1
+    cd $1
+}

@@ -251,12 +251,12 @@ class App
       Usage:
         music search <criteria> <value> [<criteria> <value>]*
 
-      Searches for music in the mpd library.
+      Searches for songs matching the specified criteria in the mpd library.
 
       Examples:
-        $ music search album puppet                            # load all songs from albums with names mathing "puppet"
-        $ music search title "Enter sandman" artist Metallica  # load all songs by Metallica with the given name
-        $ music search date 1991 genre metal                   # load all metal songs from 1991
+        $ music search album puppet                            # list all songs from albums with names mathing "puppet"
+        $ music search title "Enter sandman" artist Metallica  # list all songs by Metallica with the given name
+        $ music search date 1991 genre metal                   # list all metal songs from 1991
 
       Valid search criteria:
         album, any, artist, comment, composer, date, disc, filename, genre, name, performer, title, track
@@ -266,7 +266,7 @@ class App
       Usage:
         music add [options] <criteria> <value> [<criteria> <value>]*
 
-      Searches for music to add to the current playlist.
+      Searches for songs to add to the current playlist.
       Run 'music search --help' for details on how to search.
     },
 

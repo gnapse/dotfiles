@@ -105,10 +105,11 @@ class App
     end
 
     query = args.map { |arg| "\"#{arg}\"" }.join(" ")
+    command = "mpc search #{query} | sed \"s/\.[^\.]*$//\" | align -s / -j '    '"
     if opts[:"no-pager"]
-      cmd :yield, "mpc search #{query}"
+      cmd :yield, command
     else
-      cmd :yield, "mpc search #{query} | #{LESS}"
+      cmd :yield, "#{command} | #{LESS}"
     end
   end
 

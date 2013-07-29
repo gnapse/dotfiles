@@ -705,6 +705,11 @@ noremap <silent> <PageDown> :call smooth_scroll#down(&scroll, 20, 2)<CR>
 " Nested markdown folding
 let g:markdown_fold_style = 'nested'
 
+" Toogle quickfix and location lists
+let g:toggle_list_no_mappings = 'true'
+nmap <script> <silent> <leader>ml :call ToggleLocationList()<CR>
+nmap <script> <silent> <leader>mq :call ToggleQuickfixList()<CR>
+
 " }}}
 
 " NERDTree settings {{{

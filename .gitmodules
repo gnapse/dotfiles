@@ -154,3 +154,6 @@
 [submodule "vim/bundle/rdoc"]
 	path = vim/bundle/rdoc
 	url = git://github.com/depuracao/vim-rdoc.git
+[submodule "vim/bundle/togglelist"]
+	path = vim/bundle/togglelist
+	url = git://github.com/milkypostman/vim-togglelist.git

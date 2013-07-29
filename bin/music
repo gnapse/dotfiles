@@ -24,6 +24,16 @@ class App
         run { |opts, args| app.add(args, opts) }
       end
 
+      command :artists do
+        banner App.help_for(:artists)
+        run { |opts, args| app.artists(args, opts) }
+      end
+
+      command :albums do
+        banner App.help_for(:albums)
+        run { |opts, args| app.albums(args, opts) }
+      end
+
       command :list do
         banner App.help_for(:list)
         on 'p', 'no-pager', 'Print out the list, without using a pager to display it.'
@@ -153,6 +163,14 @@ class App
     end
   end
 
+  def artists(args, opts)
+    cmd :yield, "mpc listall | cut -d/ -f 1 | uniq | #{LESS}"
+  end
+
+  def albums(args, opts)
+    cmd :yield, "mpc listall | cut -d/ -f 1,2 | uniq | align -s / -j '  ' | #{LESS}"
+  end
+
   def lyrics(opts)
     require 'taglib'
     file = "#{ENV['HOME']}/.music/#{`mpc current --format=%file%`}".strip
@@ -275,6 +293,20 @@ class App
         music list [options]
 
       Displays the current playlist.
+    },
+
+    artists: %Q{
+      Usage:
+        music artists [query]
+
+      Displays the list of all artists, optionally filtered by those matching the provided query parameter.
+    },
+
+    albums: %Q{
+      Usage:
+        music albums [query]
+
+      Displays the list of all albums, optionally filtered by those matching the provided query parameter.
     },
 
     lyrics: %Q{

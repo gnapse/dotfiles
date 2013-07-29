@@ -1,0 +1,23 @@
+Encoding:
+  Enabled: false
+StringLiterals:
+  Enabled: false
+AvoidClassVars:
+  Enabled: false
+VariableInterpolation:
+  Enabled: false
+AsciiComments:
+  Enabled: false
+Documentation:
+  Enabled: false
+RegexpLiteral:
+  Enabled: false
+
+MethodLength:
+  Enabled: true
+  CountComments: false
+  Max: 20
+
+LineLength:
+  Enabled: true
+  Max: 99

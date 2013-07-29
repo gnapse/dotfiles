@@ -157,3 +157,6 @@
 [submodule "vim/bundle/togglelist"]
 	path = vim/bundle/togglelist
 	url = git://github.com/milkypostman/vim-togglelist.git
+[submodule "vim/bundle/rubocop"]
+	path = vim/bundle/rubocop
+	url = git://github.com/ngmy/vim-rubocop.git

@@ -6,6 +6,7 @@ gem 'cheat'
 gem 'pry'
 gem 'rake'
 gem 'tmuxinator'
+gem 'rubocop'
 
 # Dependencies
 gem 'slop'

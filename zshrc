@@ -40,6 +40,7 @@ plugins=(
     completion
     aliases
     projects
+    crypto
 )
 
 # Load Oh-My-Zsh

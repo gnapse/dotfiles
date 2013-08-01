@@ -573,6 +573,7 @@ if has("autocmd")
         au!
 
         autocmd filetype zsh,sh setlocal foldmethod=marker
+        autocmd BufNewFile,BufRead *.zsh-theme setfiletype zsh
     augroup end "}}}
 endif
 

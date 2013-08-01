@@ -1,9 +1,5 @@
 Encoding:
   Enabled: false
-StringLiterals:
-  Enabled: false
-AvoidClassVars:
-  Enabled: false
 VariableInterpolation:
   Enabled: false
 AsciiComments:
@@ -21,3 +17,7 @@ MethodLength:
 LineLength:
   Enabled: true
   Max: 99
+
+TrivialAccessors:
+  Enabled: true
+  ExactNameMatch: true

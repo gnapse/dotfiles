@@ -1,5 +1,5 @@
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
-
+local bg_jobs='%(1j.%{$terminfo[bold]$fg[green]%}[%j] %{$reset_color%}.)'
 local user_host='%{$terminfo[bold]$fg[green]%}%n@%m%{$reset_color%}'
 local current_dir='%{$terminfo[bold]$fg[blue]%} %~%{$reset_color%}'
 local rvm_ruby=''
@@ -14,7 +14,7 @@ local git_branch='$(git_prompt_info)%{$reset_color%}'
 
 PROMPT="
 ${user_host} ${current_dir} ${rvm_ruby} ${git_branch}
-%B$%b "
+${bg_jobs}%B$%b "
 RPS1="${return_code}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}["

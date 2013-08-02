@@ -144,14 +144,8 @@ au filetype vim set formatoptions-=o
 
 " Key-bindings {{{
 
-" Change the mapleader from \ to ,
-let mapleader=","
-let maplocalleader="\\"
-
-" The ; key is not that useful in command mode by default, so re-map it to
-" enter command mode and avoid having to press Shift to type the : symbol.
-nnoremap ; :
-nnoremap <leader>; ;
+" Space-bar's default use is redundant, so use <space> as <leader>
+let mapleader=" "
 
 " Avoid accidental hits of <F1> while aiming for <Esc>
 inoremap <F1> <ESC>
@@ -204,86 +198,73 @@ noremap <C-l> <C-w>l
 inoremap <C-f> <C-x><C-f>
 inoremap <C-l> <C-x><C-l>
 
+" Scroll up and down with Shift+k and Shift+j respectively
+nmap J <C-d>
+nmap K <C-u>
+
 " Quick yanking to the end of the line
-nnoremap Y y$
-
-" Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
-" yanked stack (also, in visual mode)
-nnoremap <silent> <leader>d "_d
-vnoremap <silent> <leader>d "_d
-
-" Yank/paste to the OS clipboard with ,y and ,p
-nnoremap <leader>y "+y
-nnoremap <leader>Y "+yy
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-
-" Clears the search register
-nnoremap <silent> <leader>/ :nohlsearch<CR>
-
-" Turn off highlighting search results
-nnoremap <cr> :noh<cr>
-
-" Quick alignment of text
-nnoremap <leader>al :left<CR>
-nnoremap <leader>ar :right<CR>
-nnoremap <leader>ac :center<CR>
-
-" Jump to matching pairs easily, with Tab
-nnoremap <Tab> %
-vnoremap <Tab> %
+nmap Y y$
 
 " Use shift-H and shift-L for move to beginning/end
 nnoremap H 0
 nnoremap L $
 
+" Use <leader> in front of a delete command both in normal and visual modes
+" to delete without adding to yanked stack.
+" For example <leader>dd, <leader>dj, 20<leader>dd, etc.
+nnoremap <silent> <leader>d "_d
+vnoremap <silent> <leader>d "_d
+
+" Yank/paste to the OS clipboard with <leader>y and <leader>p
+vnoremap <leader>y "+y
+nnoremap <leader>y "+y
+nnoremap <leader>Y "+yy
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+
+" Turn off highlighting search results
+nnoremap <leader><cr> :noh<cr>
+
 " Edit the vimrc file
 nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
 nnoremap <silent> <leader>vs :so $MYVIMRC<CR>
 
-" Pull word under cursor into LHS of a substitute (for quick search and replace)
-nnoremap <leader>mz :%s#\<<C-r>=expand("<cword>")<CR>\>#
+" Reselect text that was just pasted
+nnoremap <leader>vv V`]
 
 " Toggle show/hide invisible chars
-nnoremap <leader>mi :set list!<cr>
+nnoremap <leader><leader>i :set list!<cr>
 
-" Reselect text that was just pasted with ,v
-nnoremap <leader>v V`]
+" Quickly switch to the alternate buffer
+nnoremap <leader>a <c-^>
+
+" Increment and decrement numbers
+" (Specially because <C-a> is commonly used as Tmux bind-key)
+nmap <leader>2 <C-a>
+nmap <leader>1 <C-x>
 
 " Creating underline/overline headings for markup languages
 " Inspired by http://sphinx.pocoo.org/rest.html#sections
-nnoremap <leader>1 yyPVr=jyypVr=
-nnoremap <leader>2 yyPVr*jyypVr*
-nnoremap <leader>3 yypVr=
-nnoremap <leader>4 yypVr-
-nnoremap <leader>5 yypVr^
-nnoremap <leader>6 yypVr"
+nnoremap <leader>s1 yyPVr=jyypVr=
+nnoremap <leader>s2 yyPVr*jyypVr*
+nnoremap <leader>s3 yypVr=
+nnoremap <leader>s4 yypVr-
+nnoremap <leader>s5 yypVr^
+nnoremap <leader>s6 yypVr"
 
 " Split previously opened file ('#') in a split window
 nnoremap <leader>sh :execute "leftabove vsplit" bufname('#')<cr>
-nnoremap <leader>sl :execute "rightbelow vsplit" bufname('#')<cr>
+nnoremap <leader>sv :execute "rightbelow vsplit" bufname('#')<cr>
 
-" Close the current buffer
-map <leader>bd :bd!<cr>
-
-" Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
-
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>t1 :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
-
-" Pressing ,ss will toggle and untoggle spell checking
+" Toggle spelling
 map <leader>ss :setlocal spell!<cr>
 
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+" Pull word under cursor into LHS of a substitute (for quick search and replace)
+noremap <leader>sw :%s#\<<C-r>=expand("<cword>")<CR>\>#
+
+" Search and replace using perl regexp engine
+nmap <leader><leader>r :%s/\v
+vmap <leader><leader>r :s/\v
 
 " Use perl regular expressions syntax by default
 " Thanks to Steve Losh for this liberating tip
@@ -308,18 +289,6 @@ nmap <C-Up> [e
 nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
-
-" Quickly switch to the alternate buffer
-nnoremap <leader><leader> <c-^>
-
-" Increment and decrement numbers with <leader>m2/m1
-" (Specially because <C-a> is commonly used as Tmux bind-key)
-nmap <leader>m2 <C-a>
-nmap <leader>m1 <C-x>
-
-" Search and replace using perl regexp engine
-nmap <leader>r :%s/\v
-vmap <leader>r :s/\v
 
 " }}}
 
@@ -348,13 +317,6 @@ function! MyFoldText()
 endfunction
 set foldtext=MyFoldText()
 
-" Toggle fold by pressing <Space>
-nnoremap <Space> za
-vnoremap <Space> za
-
-" Creating folds for tags in HTML
-"nnoremap <leader>ft Vatzf
-
 " }}}
 
 " Toggles {{{
@@ -376,7 +338,7 @@ function! s:QuickfixToggle()
 endfunction
 
 " Toggle relative/absolute line numbers
-nnoremap <leader>mn :call LineNumbersToggle()<cr>
+nnoremap <leader><leader>n :call LineNumbersToggle()<cr>
 let g:absolute_line_numbers = 1
 function! LineNumbersToggle()
     if g:absolute_line_numbers
@@ -389,7 +351,7 @@ function! LineNumbersToggle()
 endfunction
 
 " Toggle the foldcolumn
-nnoremap <leader>mf :call FoldColumnToggle()<cr>
+nnoremap <leader><leader>z :call FoldColumnToggle()<cr>
 let g:last_fold_column_width = 4  " Pick a sane default for the foldcolumn
 function! FoldColumnToggle()
     if &foldcolumn
@@ -660,7 +622,7 @@ function! s:DiffWithSaved()
     exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
 endfunction
 com! DiffSaved call s:DiffWithSaved()
-map <leader>df :DiffSaved<CR>
+map <leader><leader>d :DiffSaved<CR>
 
 " }}}
 
@@ -668,28 +630,29 @@ map <leader>df :DiffSaved<CR>
 
 " YankRing stuff
 let g:yankring_history_dir = '$HOME/.tmp/vim'
-nnoremap <leader>my :YRShow<CR>
+nnoremap <leader><leader>y :YRShow<CR>
 
 " Strip all trailing whitespace from a file
-nnoremap <leader>mw :FixWhitespace<CR>
+nnoremap <leader><leader>w :FixWhitespace<CR>
 
 " Ack for the word under cursor
-nnoremap <leader>ma :Ack<Space><c-r><c-W>
+nnoremap <leader><leader>a :Ack<Space><c-r><c-W>
 
 " Gundo.vim
-nnoremap <leader>mu :GundoToggle<CR>
+nnoremap <leader>u :GundoToggle<CR>
 
 " git commands shortcuts
-map <leader>ms :Gstatus<cr>
+map <leader>st :Gstatus<cr>
 
 " Ctrl-p
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_height = 20
 let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
-map <leader>mt :CtrlP<CR>
-map <leader>mb :CtrlPBuffer<CR>
-map <leader>mr :CtrlPMRU<CR>
-map <leader>mm :CtrlPMixed<CR>
+map <leader>t :CtrlP<CR>
+map <leader>b :CtrlPBuffer<CR>
+map <leader>r :CtrlPMRU<CR>
+map <leader>m :CtrlPMixed<CR>
+map <leader>g :CtrlPBufTag<CR>
 
 " Powerline
 "let g:Powerline_symbols = 'compatible'
@@ -708,8 +671,8 @@ let g:markdown_fold_style = 'nested'
 
 " Toogle quickfix and location lists
 let g:toggle_list_no_mappings = 'true'
-nmap <script> <silent> <leader>ml :call ToggleLocationList()<CR>
-nmap <script> <silent> <leader>mq :call ToggleQuickfixList()<CR>
+nmap <script> <silent> <leader><leader>l :call ToggleLocationList()<CR>
+nmap <script> <silent> <leader><leader>q :call ToggleQuickfixList()<CR>
 
 " }}}
 
@@ -717,7 +680,7 @@ nmap <script> <silent> <leader>mq :call ToggleQuickfixList()<CR>
 
 " Put focus to the NERD Tree with F3 (tricked by quickly closing it and
 " immediately showing it again, since there is no :NERDTreeFocus command)
-nnoremap <leader>mf :NERDTreeToggle<CR>
+nnoremap <leader>f :NERDTreeToggle<CR>
 
 " Store the bookmarks file
 let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
@@ -747,7 +710,7 @@ let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
 
 " TagList settings {{{
 
-nnoremap <leader>mg :TlistToggle<CR>
+nnoremap <leader><leader>g :TlistToggle<CR>
 
 " quit Vim when the TagList window is the last open window
 let Tlist_Exit_OnlyWindow=1         " quit when TagList is the last open window

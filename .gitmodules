@@ -160,3 +160,6 @@
 [submodule "vim/bundle/rubocop"]
 	path = vim/bundle/rubocop
 	url = git://github.com/ngmy/vim-rubocop.git
+[submodule "vim/bundle/rspec"]
+	path = vim/bundle/rspec
+	url = git://github.com/thoughtbot/vim-rspec.git

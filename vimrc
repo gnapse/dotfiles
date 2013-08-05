@@ -674,6 +674,15 @@ let g:toggle_list_no_mappings = 'true'
 nmap <script> <silent> <leader><leader>l :call ToggleLocationList()<CR>
 nmap <script> <silent> <leader><leader>q :call ToggleQuickfixList()<CR>
 
+" Invoke rspec from within vim
+map <leader>sa :call RunAllSpecs()<CR>
+map <leader>sl :call RunLastSpec()<CR>
+map <leader>sn :call RunNearestSpec()<CR>
+map <leader>sf :call RunCurrentSpecFile()<CR>
+
+" Optionally customize command used to invoke rspec
+" let g:rspec_command = "!rspec --drb {spec}"
+
 " }}}
 
 " NERDTree settings {{{

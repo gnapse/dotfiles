@@ -18,7 +18,7 @@ set nocompatible
 " Use pathogen to easily modify the runtime path to include all plugins under
 " the ~/.vim/bundle directory
 filetype off                    " force reloading *after* pathogen loaded
-call pathogen#infect()
+call pathogen#infect('bundle/{}', '~/.vim.local/bundle/{}')
 call pathogen#helptags()
 filetype plugin indent on       " enable detection, plugins and indenting in one step
 
@@ -33,12 +33,6 @@ endif
 if has("gui_running")
     set guifont=Inconsolata-dz\ for\ Powerline:h14 linespace=0
 endif
-
-" Extra user or machine specific settings
-try
-    source ~/.vimrc.local
-catch
-endtry
 
 " }}}
 
@@ -769,5 +763,13 @@ vmap <leader>( S)lvi(
 vmap <leader>{ S}lvi{
 vmap <leader>[ S]lvi[
 vmap <leader>< S>lvi<
+
+" }}}
+
+" Extra user or machine specific settings {{{
+
+if filereadable($HOME . "/.vimrc.local")
+    source ~/.vimrc.local
+endif
 
 " }}}

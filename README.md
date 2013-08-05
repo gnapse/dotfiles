@@ -44,6 +44,19 @@ Additionally, these dotfiles are [mpd][]-oriented. If you use mpd to play your
 music, try the `music help` command and enjoy.  Also notice that tmux's
 powerline status bar shows the song currently playing on mpd.
 
+## Customization
+
+Customizations can be provided in dotfiles appended with `.local`:
+
+* `~/.aliases.local`
+* `~/.gitconfig.local`
+* `~/.tmux.conf.local`
+* `~/.vimrc.local`
+* `~/.zshrc.local`
+
+In the case of Vim, it also loads any extra plugins located in the
+`~/.vim/bundle.local` directory, which are not tracked by git.
+
 ## Credits
 
 My only merit here is having assembled various pieces of configuration files

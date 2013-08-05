@@ -20,3 +20,6 @@ mcd() {
     mkdir -p $1
     cd $1
 }
+
+# Include custom aliases
+[[ -f ~/.aliases.local ]] && source ~/.aliases.local

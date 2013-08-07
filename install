@@ -21,7 +21,7 @@ git clone --quiet git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/r
 
 echo "Creating symlinks..."
 
-symlinks='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc tmux.conf vim vimrc tm_properties rbenv rubocop.yml'
+symlinks='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc vim vimrc tm_properties rbenv rubocop.yml'
 for f in $symlinks; do
     ln -s -f $DOTFILES/$f ~/.$f
 done
@@ -30,6 +30,13 @@ done
 ln -s -f $DOTFILES/zsh/gnapse.zsh-theme $DOTFILES/oh-my-zsh/custom/
 ln -s -f $DOTFILES/zsh/plugins $DOTFILES/oh-my-zsh/custom/
 ln -s -f $DOTFILES/tmux/powerlinerc ~/.tmux-powerlinerc
+
+# Apply special tmux config when in OSX
+if [[ "$(uname)" = "Darwin" ]]; then
+    ln -s -f $DOTFILES/tmux-osx.conf ~/.tmux.conf
+else
+    ln -s -f $DOTFILES/tmux.conf ~/.tmux.conf
+fi
 
 # }}}
 

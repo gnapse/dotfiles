@@ -660,7 +660,7 @@ noremap <silent> <PageDown> :call smooth_scroll#down(&scroll, 20, 2)<CR>
 " Nested markdown folding
 let g:markdown_fold_style = 'nested'
 
-" Toogle quickfix and location lists
+" Toggle quickfix and location lists
 let g:toggle_list_no_mappings = 'true'
 nmap <script> <silent> <leader><leader>l :call ToggleLocationList()<CR>
 nmap <script> <silent> <leader><leader>q :call ToggleQuickfixList()<CR>

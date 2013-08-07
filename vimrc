@@ -73,9 +73,6 @@ set pastetoggle=<F2>            " when in insert mode, press <F2> to go to
 set mouse=a                     " enable using the mouse if terminal emulator
                                 "    supports it (xterm does)
 set fileformats=unix,dos,mac    " Use Unix as the standard file type
-set formatoptions+=1            " When wrapping paragraphs, don't end lines
-                                "    with 1-letter words (looks stupid)
-
 set nrformats=                  " make <C-a> and <C-x> play well with
                                 "    zero-padded numbers (i.e. don't consider
                                 "    them octal or hex)
@@ -157,7 +154,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 
 " Use Q for formatting the current paragraph (or visual selection)
 vnoremap Q gq
-nnoremap Q gqap
+nnoremap Q gqip
 
 " make p in Visual mode replace the selected text with the yank register
 vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>

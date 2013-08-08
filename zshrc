@@ -36,6 +36,8 @@ plugins=(
     git-flow
     cp
     colored-man
+    vi-mode
+    history-substring-search
     # custom plugins
     completion
     aliases

@@ -2,6 +2,7 @@ export EDITOR="vim"
 export DOTFILES=$(dirname `readlink ~/.zshrc`)
 ZSH=$DOTFILES/oh-my-zsh
 ZSH_THEME="gnapse"
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 DISABLE_AUTO_UPDATE="true"
 DISABLE_AUTO_TITLE="true"
@@ -36,6 +37,7 @@ plugins=(
     git-flow
     cp
     colored-man
+    zsh-syntax-highlighting
     vi-mode
     history-substring-search
     # custom plugins

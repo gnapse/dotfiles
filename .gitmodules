@@ -163,3 +163,6 @@
 [submodule "vim/bundle/rspec"]
 	path = vim/bundle/rspec
 	url = git://github.com/thoughtbot/vim-rspec.git
+[submodule "vim/bundle/snippets"]
+	path = vim/bundle/snippets
+	url = git://github.com/honza/vim-snippets.git

@@ -160,12 +160,15 @@
 [submodule "vim/bundle/rubocop"]
 	path = vim/bundle/rubocop
 	url = git://github.com/ngmy/vim-rubocop.git
-[submodule "vim/bundle/rspec"]
-	path = vim/bundle/rspec
-	url = git://github.com/thoughtbot/vim-rspec.git
 [submodule "vim/bundle/snippets"]
 	path = vim/bundle/snippets
 	url = git://github.com/honza/vim-snippets.git
 [submodule "zsh/plugins/zsh-syntax-highlighting"]
 	path = zsh/plugins/zsh-syntax-highlighting
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "vim/bundle/vimux"]
+	path = vim/bundle/vimux
+	url = git://github.com/benmills/vimux.git
+[submodule "vim/bundle/vroom"]
+	path = vim/bundle/vroom
+	url = git://github.com/skalnik/vim-vroom

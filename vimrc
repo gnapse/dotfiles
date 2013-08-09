@@ -665,14 +665,24 @@ let g:toggle_list_no_mappings = 'true'
 nmap <script> <silent> <leader><leader>l :call ToggleLocationList()<CR>
 nmap <script> <silent> <leader><leader>q :call ToggleQuickfixList()<CR>
 
-" Invoke rspec from within vim
-map <leader>sa :call RunAllSpecs()<CR>
-map <leader>sl :call RunLastSpec()<CR>
-map <leader>sn :call RunNearestSpec()<CR>
-map <leader>sf :call RunCurrentSpecFile()<CR>
+" }}}
 
-" Optionally customize command used to invoke rspec
-" let g:rspec_command = "!rspec --drb {spec}"
+" vimux and vroom settings {{{
+
+" Invoke tests from within vim
+let g:vroom_use_vimux = 1
+let g:vroom_write_all = 1
+let g:vroom_map_keys = 0
+nmap <leader>sf :VroomRunTestFile<CR>
+nmap <leader>sn :VroomRunNearestTest<CR>
+nmap <leader>sl :VimuxRunLastCommand<CR>
+nmap <leader>sr :call VimuxRunCommand('rspec')<CR>
+
+" Custom keybindings for controlling vimux pane
+let g:VimuxHeight = "25"
+nmap <leader>xp :VimuxPromptCommand<CR>
+nmap <leader>xl :VimuxRunLastCommand<CR>
+nmap <leader>xq :VimuxCloseRunner<CR>
 
 " }}}
 

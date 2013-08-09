@@ -172,3 +172,6 @@
 [submodule "vim/bundle/vroom"]
 	path = vim/bundle/vroom
 	url = git://github.com/skalnik/vim-vroom
+[submodule "vim/bundle/pathogen"]
+	path = vim/bundle/pathogen
+	url = git://github.com/tpope/vim-pathogen.git

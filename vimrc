@@ -18,6 +18,7 @@ set nocompatible
 " Use pathogen to easily modify the runtime path to include all plugins under
 " the ~/.vim/bundle directory
 filetype off                    " force reloading *after* pathogen loaded
+runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect('bundle/{}', '~/.vim.local/bundle/{}')
 call pathogen#helptags()
 filetype plugin indent on       " enable detection, plugins and indenting in one step

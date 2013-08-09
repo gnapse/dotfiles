@@ -1,5 +1,6 @@
 export EDITOR="vim"
 export DOTFILES=$(dirname `readlink ~/.zshrc`)
+export MANPAGER="less -X"
 ZSH=$DOTFILES/oh-my-zsh
 ZSH_THEME="gnapse"
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)

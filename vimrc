@@ -475,6 +475,9 @@ if has("autocmd")
         autocmd filetype ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
         autocmd filetype yaml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
         autocmd filetype coffee setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+
+        let g:rubocop_no_mappings = 'true'
+        autocmd filetype ruby noremap <buffer> <leader>o :w<CR>:RuboCop<CR>
     augroup end " }}}
 
     augroup rst_files "{{{

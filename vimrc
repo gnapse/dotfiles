@@ -156,6 +156,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 " Use Q for formatting the current paragraph (or visual selection)
 vnoremap Q gq
 nnoremap Q gqip
+inoremap <C-g>q <ESC>gqipA
 
 " make p in Visual mode replace the selected text with the yank register
 vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>

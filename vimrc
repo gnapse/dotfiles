@@ -177,10 +177,6 @@ noremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-" Quickly get out of insert mode without your fingers having
-" to leave the home row (either use 'jj' or 'jk')
-inoremap jj <Esc>
-
 " Easy window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
@@ -313,22 +309,6 @@ set foldtext=MyFoldText()
 " }}}
 
 " Toggles {{{
-
-" Toggle the quickfix window
-" From Steve Losh, http://learnvimscriptthehardway.stevelosh.com/chapters/38.html
-nnoremap <C-q> :call <SID>QuickfixToggle()<cr>
-let g:quickfix_is_open = 0
-function! s:QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-        execute g:quickfix_return_to_window . "wincmd w"
-    else
-        let g:quickfix_return_to_window = winnr()
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
 
 " Toggle relative/absolute line numbers
 nnoremap <leader><leader>n :call LineNumbersToggle()<cr>

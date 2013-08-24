@@ -276,10 +276,10 @@ vmap [<Tab> <gv
 vmap ]<Tab> >gv
 
 " Bubble single and multiple lines up and down
-nmap <C-Up> [e
-nmap <C-Down> ]e
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
+nmap [1 [e
+nmap ]1 ]e
+vmap [1 [egv
+vmap ]1 ]egv
 
 " Keep search matches in the middle of the window
 nnoremap n nzz

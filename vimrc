@@ -260,12 +260,20 @@ nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
 " Indent in and out with Cmd+] and Cmd+[ respectively
+" Only works in MacVim
 if has("mac") || has("macunix")
     nmap <D-[> <<
     nmap <D-]> >>
     vmap <D-[> <gv
     vmap <D-]> >gv
 endif
+
+" Indent in and out with ]<Tab> and [<Tab> respectively
+" works in gvim, macvim and in the terminal too
+nmap [<Tab> <<
+nmap ]<Tab> >>
+vmap [<Tab> <gv
+vmap ]<Tab> >gv
 
 " Bubble single and multiple lines up and down
 nmap <C-Up> [e

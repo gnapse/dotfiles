@@ -458,7 +458,7 @@ if has("autocmd")
         autocmd filetype yaml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
         autocmd filetype coffee setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
-        let g:rubocop_no_mappings = 'true'
+        let g:vimrubocop_keymap = 0
         autocmd filetype ruby noremap <buffer> <leader>o :w<CR>:RuboCop<CR>
     augroup end " }}}
 

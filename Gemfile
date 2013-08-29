@@ -7,6 +7,7 @@ gem 'pry'
 gem 'rake'
 gem 'tmuxinator'
 gem 'rubocop'
+gem 'gem-browse'
 
 # Dependencies
 gem 'slop'

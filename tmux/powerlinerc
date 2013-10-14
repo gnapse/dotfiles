@@ -154,6 +154,6 @@
 	# Your location. Find a code that works for you:
 	# 1. Go to Yahoo weather http://weather.yahoo.com/
 	# 2. Find the weather for you location
-	# 3. Copy the last numbers in that URL. e.g. "http://weather.yahoo.com/united-states/california/newport-beach-12796587/" has the numbers "12796587"
-	export TMUX_POWERLINE_SEG_WEATHER_LOCATION="63817"
+	# 3. Copy the last numbers in that URL. e.g. "http://weather.yahoo.com/chile/santiago/santiago-349859/" has the numbers "349859"
+	export TMUX_POWERLINE_SEG_WEATHER_LOCATION="349859"
 # }}}

@@ -1,13 +1,17 @@
-#!/usr/bin/ruby
-
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'rubygems'
-require 'interactive_editor'
 
 # Save history between IRB sessions
 IRB.conf[:SAVE_HISTORY] = 1000
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
+
+# interactive editor: use vim from within irb
+begin
+  require 'interactive_editor'
+rescue LoadError => err
+  warn "Couldn't load interactive_editor: #{err}"
+end
 
 # Various object extensions
 class Object

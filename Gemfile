@@ -8,6 +8,7 @@ gem 'rake'
 gem 'tmuxinator'
 gem 'rubocop'
 gem 'gem-browse'
+gem 'interactive_editor'
 
 # Dependencies
 gem 'slop'

@@ -42,6 +42,7 @@
 
 	# Divergence (commits we added and commits remote added)
 	div = divergence
+	today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
 [color]
 	ui = true
 	diff = auto

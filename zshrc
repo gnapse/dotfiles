@@ -14,10 +14,6 @@ COMPLETION_WAITING_DOTS="true"
 typeset -U path
 path=(~/bin $DOTFILES/bin /usr/local/bin $path)
 
-# Add RBENV support
-path=(~/.rbenv/shims ~/.rbenv/bin $path)
-eval "$(rbenv init -)"
-
 # List of Oh-My-Zsh plugins to load
 plugins=(
     git

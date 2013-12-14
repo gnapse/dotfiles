@@ -21,7 +21,7 @@ git clone --quiet git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/r
 
 echo "Creating symlinks..."
 
-symlinks='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc vim vimrc tm_properties rbenv rubocop.yml'
+symlinks='zshrc gitconfig gitignore gemrc railsrc irbrc pryrc vim vimrc tm_properties rubocop.yml'
 for f in $symlinks; do
     ln -s -f $DOTFILES/$f ~/.$f
 done

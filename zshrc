@@ -17,24 +17,8 @@ path=(~/bin $DOTFILES/bin /usr/local/bin $path)
 # List of Oh-My-Zsh plugins to load
 plugins=(
     git
-    osx
-    pow
-    bundler
-    brew
-    gem
-    rails3
-    textmate
     extract
-    mvn
-    rsync
-    tmux
-    tmuxinator
-    redis-cli
     history
-    git-flow
-    cp
-    colored-man
-    zsh-syntax-highlighting
     vi-mode
     history-substring-search
     # custom plugins

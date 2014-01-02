@@ -7,13 +7,6 @@ IRB.conf[:SAVE_HISTORY] = 1000
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 IRB.conf[:PROMPT_MODE] = :SIMPLE
 
-# interactive editor: use vim from within irb
-begin
-  require 'interactive_editor'
-rescue LoadError => err
-  warn "Couldn't load interactive_editor: #{err}"
-end
-
 # Various object extensions
 class Object
   def local_methods(obj = self)
@@ -37,4 +30,18 @@ class Object
     end
     system 'ri', method.to_s
   end
+end
+
+# This makes pry itself and all pry gems available
+$LOAD_PATH.push(*Dir["#{ENV['HOME']}/.prygems/gems/*/lib"]).uniq!
+
+begin
+  # Use Pry everywhere
+  require 'pry'
+rescue LoadError => e
+end
+
+if defined? Pry
+  Pry.start
+  exit
 end

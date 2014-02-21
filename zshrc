@@ -21,6 +21,7 @@ plugins=(
     history
     vi-mode
     history-substring-search
+    autojump
     # custom plugins
     completion
     aliases

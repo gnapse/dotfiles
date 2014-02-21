@@ -213,7 +213,7 @@ nnoremap <silent> <leader>ve :e $MYVIMRC<CR>
 nnoremap <silent> <leader>vs :so $MYVIMRC<CR>
 
 " Reselect text that was just pasted
-nnoremap <leader>vv V`]
+nnoremap <expr> <leader>vv '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " Toggle show/hide invisible chars
 nnoremap <leader><leader>i :set list!<cr>

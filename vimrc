@@ -583,7 +583,7 @@ map <leader>st :Gstatus<cr>
 " Ctrl-p
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_height = 20
-let g:ctrlp_custom_ignore = 'vendor\/ruby\|node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
+let g:ctrlp_custom_ignore = 'tmp\/cache\|vendor\/ruby\|node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 map <leader>t :CtrlP<CR>
 map <leader>b :CtrlPBuffer<CR>
 map <leader>r :CtrlPMRU<CR>

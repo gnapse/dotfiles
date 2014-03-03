@@ -3,6 +3,7 @@
 git init
 git add -A
 git commit -m "Initial commit"
+mv .git/hooks/pre-commit.sample .git/hooks/pre-commit
 
 if command -v git-flow; then
     git flow init -d

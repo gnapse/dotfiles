@@ -177,6 +177,7 @@ class App
     TagLib::MPEG::File.open(file) do |file|
       tag = file.id3v2_tag
       lyrics = tag.frame_list("USLT").first || "(No lyrics)"
+      lyrics = lyrics.to_s.gsub("\r", "\n")
       title = `mpc current --format="%title% - %artist%"`
       print "#{title}\n#{lyrics}", opts
     end

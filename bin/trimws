@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ $# -ne 0 ]
+then
+    for fname in "$@"
+    do
+        cat $fname | git stripspace | cat > $fname
+    done
+else
+    git grep -I --name-only -z -e '' | xargs -0 -n 5 trimws
+fi

@@ -284,7 +284,7 @@ nnoremap N Nzz
 " Folding {{{
 
 set foldenable                  " enable folding
-set foldcolumn=2                " add a fold column
+set foldcolumn=0                " do not show fold column
 set foldmethod=syntax           " fold according to language syntax
 set foldlevelstart=99           " start out with everything folded
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
@@ -312,7 +312,7 @@ set foldtext=MyFoldText()
 
 " Toggle the foldcolumn
 nnoremap <leader><leader>z :call FoldColumnToggle()<cr>
-let g:last_fold_column_width = 4  " Pick a sane default for the foldcolumn
+let g:last_fold_column_width = 2  " Pick a sane default for the foldcolumn
 function! FoldColumnToggle()
     if &foldcolumn
         let g:last_fold_column_width = &foldcolumn

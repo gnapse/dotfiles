@@ -215,9 +215,6 @@ nnoremap <silent> <leader>vs :so $MYVIMRC<CR>
 " Reselect text that was just pasted
 nnoremap <expr> <leader>vv '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-" Toggle show/hide invisible chars
-nnoremap <leader><leader>i :set list!<cr>
-
 " Quickly switch to the alternate buffer
 nnoremap <leader>a <c-^>
 
@@ -238,9 +235,6 @@ nnoremap <leader>s6 yypVr"
 " Split previously opened file ('#') in a split window
 nnoremap <leader>sh :execute "leftabove vsplit" bufname('#')<cr>
 nnoremap <leader>sv :execute "rightbelow vsplit" bufname('#')<cr>
-
-" Toggle spelling
-map <leader>ss :setlocal spell!<cr>
 
 " Pull word under cursor into LHS of a substitute (for quick search and replace)
 noremap <leader>sw :%s#\<<C-r>=expand("<cword>")<CR>\>#
@@ -315,19 +309,6 @@ set foldtext=MyFoldText()
 " }}}
 
 " Toggles {{{
-
-" Toggle relative/absolute line numbers
-nnoremap <leader><leader>n :call LineNumbersToggle()<cr>
-let g:absolute_line_numbers = 1
-function! LineNumbersToggle()
-    if g:absolute_line_numbers
-        let g:absolute_line_numbers = 0
-        set relativenumber
-    else
-        let g:absolute_line_numbers = 1
-        set number
-    endif
-endfunction
 
 " Toggle the foldcolumn
 nnoremap <leader><leader>z :call FoldColumnToggle()<cr>

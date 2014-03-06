@@ -558,10 +558,6 @@ map <leader>r :CtrlPMRU<CR>
 map <leader>m :CtrlPMixed<CR>
 map <leader>g :CtrlPBufTag<CR>
 
-" Powerline
-"let g:Powerline_symbols = 'compatible'
-let g:Powerline_symbols = 'fancy'
-
 " Smooth scrolling
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 20, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 20, 2)<CR>

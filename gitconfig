@@ -86,6 +86,6 @@
 	cmd = diffmerge --merge\n--result=$MERGED $LOCAL $BASE $REMOTE
 	trustExitCode = true
 [include]
-  path = ~/.gitconfig.local
+	path = ~/.gitconfig.local
 [branch]
 	autosetuprebase = always

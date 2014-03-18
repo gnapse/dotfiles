@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Nice command line tools
 gem 'gist'
 gem 'cheat'
-gem 'pry'
+gem 'jazz_hands'
 gem 'rake'
 gem 'tmuxinator'
 gem 'rubocop'

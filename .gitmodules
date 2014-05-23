@@ -161,3 +161,6 @@
 [submodule "vim/bundle/ag"]
 	path = vim/bundle/ag
 	url = https://github.com/rking/ag.vim
+[submodule "vim/bundle/autotag"]
+	path = vim/bundle/autotag
+	url = git://github.com/vim-scripts/AutoTag.git

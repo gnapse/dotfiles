@@ -44,6 +44,9 @@
 	div = divergence
 	today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
 	flog = log -g --summary
+
+	# Generate .gitignore files
+	ignore = "!gi() { curl -s https://www.gitignore.io/api/$@ ;}; gi"
 [color]
 	ui = true
 	diff = auto

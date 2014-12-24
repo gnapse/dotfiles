@@ -15,6 +15,10 @@ git submodule --quiet update
 git clone --quiet git://github.com/sstephenson/rbenv.git ~/.rbenv
 git clone --quiet git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 
+# fish shell
+brew install fish
+git clone --quiet git://github.com/bpinto/oh-my-fish.git ~/.oh-my-fish
+
 # }}}
 
 # Create symlinks {{{
@@ -28,6 +32,7 @@ done
 
 # Set up some extra files and directories
 ln -s -f $DOTFILES/tmux/powerlinerc ~/.tmux-powerlinerc
+ln -s -f $DOTFILES/oh-my-fish/config.fish ~/.config/fish/config.fish
 
 # Apply special tmux config when in OSX
 if [[ "$(uname)" = "Darwin" ]]; then
@@ -38,11 +43,11 @@ fi
 
 # }}}
 
-# Set zsh as the default shell {{{
+# Set fish as the default shell {{{
 
-if [[ $SHELL != "/bin/zsh" ]]; then
-    echo "Setting zsh as the default shell..."
-    chsh -s /bin/zsh
+if [[ $SHELL != "/usr/local/bin/fish" ]]; then
+    echo "Setting fish as the default shell..."
+    chsh -s /usr/local/bin/fish
 fi
 
 # }}}

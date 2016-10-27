@@ -20,9 +20,6 @@
 [submodule "vim/bundle/markdown"]
 	path = vim/bundle/markdown
 	url = git://github.com/tpope/vim-markdown.git
-[submodule "vim/bundle/ctrlp"]
-	path = vim/bundle/ctrlp
-	url = git://github.com/kien/ctrlp.vim
 [submodule "vim/bundle/tabular"]
 	path = vim/bundle/tabular
 	url = git://github.com/godlygeek/tabular.git
@@ -164,3 +161,12 @@
 [submodule "vim/bundle/autotag"]
 	path = vim/bundle/autotag
 	url = git://github.com/vim-scripts/AutoTag.git
+[submodule "vim/bundle/mustache-handlebars"]
+	path = vim/bundle/mustache-handlebars
+	url = https://github.com/mustache/vim-mustache-handlebars
+[submodule "vim/bundle/jsx"]
+	path = vim/bundle/jsx
+	url = https://github.com/mxw/vim-jsx
+[submodule "vim/bundle/ctrlp"]
+	path = vim/bundle/ctrlp
+	url = https://github.com/ctrlpvim/ctrlp.vim

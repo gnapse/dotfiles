@@ -19,7 +19,12 @@ set fish_theme gnapse
 set -gx RBENV_ROOT ~/.rbenv
 . (rbenv init -|psub)
 
+# Java
+set -x JAVA_HOME (/usr/libexec/java_home -v 1.8)
+
 # Android SDK
 # set -x JAVA_HOME (/usr/libexec/java_home -v 1.6)
 # set -x ANDROID_SDK ~/Library/android-sdk
 # set PATH $ANDROID_SDK/tools $ANDROID_SDK/platform-tools $PATH
+
+source ~/.config/fish/nvm-wrapper/nvm.fish

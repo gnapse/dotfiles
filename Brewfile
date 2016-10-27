@@ -1,0 +1,10 @@
+git
+postgresql
+redis
+ctags
+tree
+wget
+scala
+elasticsearch
+imagemagick
+the_silver_searcher

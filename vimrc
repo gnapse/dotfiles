@@ -32,7 +32,7 @@ endif
 
 " Set gui font
 if has("gui_running")
-    set guifont=Inconsolata-dz\ for\ Powerline:h14 linespace=0
+    set guifont=Inconsolata-dz\ for\ Powerline:h12 linespace=0
 endif
 
 " }}}
@@ -168,6 +168,7 @@ noremap <left> <nop>
 noremap <right> <nop>
 
 " Remap j and k to act as expected when used on long, wrapped, lines
+" Also make them keep the cursor centered vertically, moving the file instead
 nnoremap j gj
 nnoremap k gk
 
@@ -455,7 +456,8 @@ if has("autocmd")
     augroup css_files "{{{
         au!
 
-        autocmd filetype css,less setlocal foldmethod=marker foldmarker={,}
+        autocmd filetype css,scss,less setlocal foldmethod=marker foldmarker={,}
+        autocmd filetype css,scss,less setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
     augroup end "}}}
 
     augroup javascript_files "{{{
@@ -463,6 +465,8 @@ if has("autocmd")
 
         autocmd filetype javascript setlocal expandtab
         autocmd filetype javascript setlocal foldmethod=marker foldmarker={,}
+        autocmd filetype javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+        autocmd filetype javascript.jsx setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
         " Toggling True/False
         autocmd filetype javascript nnoremap <silent> <C-t> mmviw:s/true\\|false/\={'true':'false','false':'true'}[submatch(0)]/<CR>`m:nohlsearch<CR>
@@ -478,22 +482,29 @@ if has("autocmd")
         autocmd filetype textile highlight link frontmatter Comment
     augroup end "}}}
 
-    augroup trailing_whitespace "{{{
-        au!
+    " augroup trailing_whitespace "{{{
+    "     au!
 
-        " Delete trailing white space on save for certain types of files
-        autocmd BufWrite *.py :FixWhitespace
-        autocmd BufWrite *.rb :FixWhitespace
-        autocmd BufWrite *.js :FixWhitespace
-        autocmd BufWrite *.css :FixWhitespace
-        autocmd BufWrite *.coffee :FixWhitespace
-    augroup end "}}}
+    "     " Delete trailing white space on save for certain types of files
+    "     autocmd BufWrite *.py :FixWhitespace
+    "     autocmd BufWrite *.rb :FixWhitespace
+    "     autocmd BufWrite *.js :FixWhitespace
+    "     autocmd BufWrite *.css :FixWhitespace
+    "     autocmd BufWrite *.coffee :FixWhitespace
+    " augroup end "}}}
 
     augroup shell_scripts "{{{
         au!
 
         autocmd filetype zsh,sh setlocal foldmethod=marker
         autocmd BufNewFile,BufRead *.zsh-theme setfiletype zsh
+    augroup end "}}}
+
+    augroup coffeescript_files "{{{
+        au!
+
+        autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
+        autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
     augroup end "}}}
 endif
 
@@ -551,7 +562,7 @@ map <leader>st :Gstatus<cr>
 " Ctrl-p
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_max_height = 20
-let g:ctrlp_custom_ignore = 'tmp\/cache\|vendor\/ruby\|node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
+let g:ctrlp_custom_ignore = 'bower_components\|dist\|tmp\|vendor\/ruby\|node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 map <leader>t :CtrlP<CR>
 map <leader>b :CtrlPBuffer<CR>
 map <leader>r :CtrlPMRU<CR>

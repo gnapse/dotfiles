@@ -463,9 +463,11 @@ if has("autocmd")
 
         autocmd filetype javascript setlocal expandtab
         autocmd filetype javascript setlocal foldmethod=marker foldmarker={,}
+        autocmd filetype javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
         " Toggling True/False
         autocmd filetype javascript nnoremap <silent> <C-t> mmviw:s/true\\|false/\={'true':'false','false':'true'}[submatch(0)]/<CR>`m:nohlsearch<CR>
+        let g:jsx_ext_required = 0 " Allow JSX in normal JS files
     augroup end "}}}
 
     augroup textile_files "{{{

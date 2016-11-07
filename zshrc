@@ -22,6 +22,7 @@ plugins=(
     vi-mode
     history-substring-search
     autojump
+    tmuxinator
     # custom plugins
     completion
     aliases

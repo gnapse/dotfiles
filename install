@@ -1,19 +1,34 @@
 #!/usr/bin/env sh
 
 DOTFILES=$(dirname $0)
+cd $DOTFILES
+
+# Brew some stuff {{{
+
+echo "Installing Xcode's command line tools..."
+xcode-select --install
+
+echo "Installing homebrew..."
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+echo "Brewing some stuff..."
+brew tap homebrew/bundle
+brew bundle
+
+# }}}
 
 # Install dependencies {{{
 
 echo "Installing dependencies..."
 
 # Submodules
-cd $DOTFILES
 git submodule --quiet init
 git submodule --quiet update
 
-# rbenv
+# rbenv & nvm
 git clone --quiet git://github.com/sstephenson/rbenv.git ~/.rbenv
 git clone --quiet git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+git clone --quiet https://github.com/creationix/nvm.git ~/.nvm
 
 # }}}
 
@@ -28,7 +43,7 @@ done
 
 # Set up some extra files and directories
 ln -s -f $DOTFILES/zsh/gnapse.zsh-theme $DOTFILES/oh-my-zsh/custom/
-ln -s -f $DOTFILES/zsh/plugins $DOTFILES/oh-my-zsh/custom/
+ln -s -f $DOTFILES/zsh/plugins/* $DOTFILES/oh-my-zsh/custom/plugins/
 ln -s -f $DOTFILES/tmux/powerlinerc ~/.tmux-powerlinerc
 
 # Apply special tmux config when in OSX

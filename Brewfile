@@ -1,0 +1,13 @@
+brew "watchman"
+brew "postgresql"
+brew "the_silver_searcher"
+brew "scala"
+brew "ctags"
+brew "phantomjs"
+brew "tmux"
+brew "reattach-to-user-namespace"
+
+tap "homebrew/dupes"
+brew "apple-gcc42"
+tap "homebrew/versions"
+brew "v8-315"
